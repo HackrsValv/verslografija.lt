@@ -246,7 +246,7 @@ def render_page(posts):
             <nav class="masthead-nav">
                 <a href="#naujausios">Naujausios</a>
                 <a href="#prenumeruoti">Prenumeruoti</a>
-                <a href="https://visa.verslografija.lt" target="_blank" rel="noopener">Archyvas</a>
+                <a href="https://visa.verslografija.lt/archive/">Archyvas</a>
             </nav>
         </div>
     </header>
@@ -303,7 +303,7 @@ def render_page(posts):
     <!-- === FOOTER === -->
     <footer class="footer">
         <div class="footer-inner">
-            <a href="https://visa.verslografija.lt" class="footer-archive">Visas archyvas &rarr;</a>
+            <a href="https://visa.verslografija.lt/archive/" class="footer-archive">Visas archyvas &rarr;</a>
             <p class="footer-copy">&copy; 2024&ndash;2026 Verslo Grafija</p>
         </div>
     </footer>
