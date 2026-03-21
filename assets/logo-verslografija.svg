@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" seed="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="grain"/>
+      <feColorMatrix type="saturate" values="0" in="grain" result="grainMono"/>
+      <feBlend in="SourceGraphic" in2="grainMono" mode="multiply"/>
+    </filter>
+  </defs>
+
+  <!-- Background — white with subtle grain -->
+  <rect width="512" height="512" fill="#ffffff"/>
+
+  <!-- Outer border — thick, linocut style -->
+  <rect x="24" y="24" width="464" height="464" fill="none" stroke="#111111" stroke-width="8" filter="url(#rough)"/>
+
+  <!-- Inner border -->
+  <rect x="40" y="40" width="432" height="432" fill="none" stroke="#111111" stroke-width="2" filter="url(#rough)"/>
+
+  <!-- The V — bold, hand-carved feel -->
+  <text x="256" y="340"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="320"
+        font-weight="bold"
+        text-anchor="middle"
+        fill="#111111"
+        filter="url(#rough)">V</text>
+
+  <!-- Bottom bar with text -->
+  <rect x="40" y="400" width="432" height="72" fill="#111111" filter="url(#rough)"/>
+  <text x="256" y="445"
+        font-family="'Courier New', Courier, monospace"
+        font-size="18"
+        font-weight="bold"
+        letter-spacing="8"
+        text-anchor="middle"
+        fill="#ffffff"
+        filter="url(#rough)">VERSLOGRAFIJA</text>
+</svg>
