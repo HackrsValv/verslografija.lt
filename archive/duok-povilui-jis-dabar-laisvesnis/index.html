@@ -17,18 +17,22 @@
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/style.css">
 </head>
-<body>
-    <header class="post-masthead">
-        <a href="/" class="post-masthead-logo" aria-label="Verslo Grafija">
-            <img src="/assets/logo-verslografija.svg" alt="" width="40" height="40">
-            <span>Verslo Grafija</span>
-        </a>
-    </header>
+<body class="mm">
+    <div class="mm-topbar">
+        <header class="mm-plate mm-plate--slim">
+            <a href="/" class="mm-mark mm-mark--sm" aria-label="Verslo Grafija">V</a>
+            <a href="/" class="mm-wordmark mm-wordmark--sm">Verslo <span>Grafija</span></a>
+            <nav class="mm-nav mm-nav--row">
+                <a href="/">Pradžia</a>
+                <a href="/archive/">Archyvas</a>
+            </nav>
+        </header>
+    </div>
     <main>
         <article class="post">
             <span class="post-date">2026-06-19</span>
-            <h1 class="post-title">Duok Povilui, jis dabar laisvesnis</h1>
-            <div class="post-cover"><img src="https://assets.buttondown.email/images/d4c5dda5-2ac9-42e7-8b72-4cf72f3fe288.png" alt="Duok Povilui, jis dabar laisvesnis — iliustracija" loading="eager" decoding="async"></div>
+            <h1 class="post-title" style="view-transition-name:title-duok-povilui-jis-dabar-laisvesnis">Duok Povilui, jis dabar laisvesnis</h1>
+            <div class="post-cover" style="view-transition-name:cover-duok-povilui-jis-dabar-laisvesnis"><img src="https://assets.buttondown.email/images/d4c5dda5-2ac9-42e7-8b72-4cf72f3fe288.png" alt="Duok Povilui, jis dabar laisvesnis — iliustracija" loading="eager" decoding="async"></div>
             <div class="post-body">
 <p><em>Planavimo susirinkimas.</em> Atsiradus naujai užduočiai kažkas paklausia, kas ją paims. Visi žiūri į savo užrašus. Tada nuskamba sakinys, kurį esi girdėjęs tiek kartų, kad jo nebepastebi:</p>
 <p>„Duok Povilui, jis dabar laisvesnis.“</p>
@@ -63,20 +67,19 @@
         <a class="post-nav-prev" href="/archive/kodel-visi-daro-teisingai-ir-vis-tiek-pralaimi/">&larr; Kodėl visi daro teisingai ir vis tiek pralaimi</a>
         <span></span>
     </nav>
-    <section class="subscribe" id="prenumeruoti">
-        <div class="subscribe-inner">
-            <p class="subscribe-tagline">Visi kažką žiūrim, o kartais ir parašom</p>
-            <form action="https://buttondown.com/api/emails/embed-subscribe/verslografija"
-                  method="post" target="popupwindow" class="subscribe-form">
-                <label for="bd-email" class="sr-only">El. paštas</label>
-                <input type="email" name="email" id="bd-email" placeholder="El. paštas"
-                       autocomplete="email" inputmode="email" autocapitalize="off"
-                       autocorrect="off" spellcheck="false" maxlength="254"
-                       aria-describedby="bd-note" required>
-                <button type="submit">Prenumeruoti</button>
-            </form>
-            <p class="subscribe-note" id="bd-note">Šlamštas iš vidaus</p>
-        </div>
+    <section class="mm-coupon" id="prenumeruoti">
+        <h2>Šlamštas, kurį verta atidaryti</h2>
+        <p>Visi kažką žiūrim, o kartais ir parašom.</p>
+        <form action="https://buttondown.com/api/emails/embed-subscribe/verslografija"
+              method="post" target="popupwindow">
+            <label for="bd-email" class="sr-only">El. paštas</label>
+            <input type="email" name="email" id="bd-email" placeholder="El. paštas"
+                   autocomplete="email" inputmode="email" autocapitalize="off"
+                   autocorrect="off" spellcheck="false" maxlength="254"
+                   aria-describedby="bd-note" required>
+            <button type="submit">Prenumeruoti</button>
+        </form>
+        <p class="mm-fine" id="bd-note">Šlamštas iš vidaus · be jokių blokerių</p>
     </section>
     </main>
     <footer class="footer">

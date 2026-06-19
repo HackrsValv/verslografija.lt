@@ -17,18 +17,22 @@
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/style.css">
 </head>
-<body>
-    <header class="post-masthead">
-        <a href="/" class="post-masthead-logo" aria-label="Verslo Grafija">
-            <img src="/assets/logo-verslografija.svg" alt="" width="40" height="40">
-            <span>Verslo Grafija</span>
-        </a>
-    </header>
+<body class="mm">
+    <div class="mm-topbar">
+        <header class="mm-plate mm-plate--slim">
+            <a href="/" class="mm-mark mm-mark--sm" aria-label="Verslo Grafija">V</a>
+            <a href="/" class="mm-wordmark mm-wordmark--sm">Verslo <span>Grafija</span></a>
+            <nav class="mm-nav mm-nav--row">
+                <a href="/">Pradžia</a>
+                <a href="/archive/">Archyvas</a>
+            </nav>
+        </header>
+    </div>
     <main>
         <article class="post">
             <span class="post-date">2026-03-18</span>
-            <h1 class="post-title">Darbo imitacijos rinka</h1>
-            <div class="post-cover"><img src="https://assets.buttondown.email/images/405e8ccb-2bff-44bc-9b2d-34f6e1003fec.jpg" alt="Darbo imitacijos rinka — iliustracija" loading="eager" decoding="async"></div>
+            <h1 class="post-title" style="view-transition-name:title-darbo-imitacijos-rinka">Darbo imitacijos rinka</h1>
+            <div class="post-cover" style="view-transition-name:cover-darbo-imitacijos-rinka"><img src="https://assets.buttondown.email/images/405e8ccb-2bff-44bc-9b2d-34f6e1003fec.jpg" alt="Darbo imitacijos rinka — iliustracija" loading="eager" decoding="async"></div>
             <div class="post-body">
 „Visi žino“, kad dirbti efektyviau yra labai geras tikslas. Bent jau taip sako tie, kurie niekada nesusimąstė, kodėl susirinkimas apie ataskaitą, kurios niekas neskaito, vyksta jau trečią ketvirtį iš eilės.</p>
 <h2>Standup, kurio niekas neprašė</h2>
@@ -46,20 +50,19 @@
         <a class="post-nav-prev" href="/archive/eksperimentas-kurio-nebuvo/">&larr; Eksperimentas, kurio nebuvo</a>
         <a class="post-nav-next" href="/archive/gera-preke-pati-save-giria/">Gera prekė pati save giria &rarr;</a>
     </nav>
-    <section class="subscribe" id="prenumeruoti">
-        <div class="subscribe-inner">
-            <p class="subscribe-tagline">Visi kažką žiūrim, o kartais ir parašom</p>
-            <form action="https://buttondown.com/api/emails/embed-subscribe/verslografija"
-                  method="post" target="popupwindow" class="subscribe-form">
-                <label for="bd-email" class="sr-only">El. paštas</label>
-                <input type="email" name="email" id="bd-email" placeholder="El. paštas"
-                       autocomplete="email" inputmode="email" autocapitalize="off"
-                       autocorrect="off" spellcheck="false" maxlength="254"
-                       aria-describedby="bd-note" required>
-                <button type="submit">Prenumeruoti</button>
-            </form>
-            <p class="subscribe-note" id="bd-note">Šlamštas iš vidaus</p>
-        </div>
+    <section class="mm-coupon" id="prenumeruoti">
+        <h2>Šlamštas, kurį verta atidaryti</h2>
+        <p>Visi kažką žiūrim, o kartais ir parašom.</p>
+        <form action="https://buttondown.com/api/emails/embed-subscribe/verslografija"
+              method="post" target="popupwindow">
+            <label for="bd-email" class="sr-only">El. paštas</label>
+            <input type="email" name="email" id="bd-email" placeholder="El. paštas"
+                   autocomplete="email" inputmode="email" autocapitalize="off"
+                   autocorrect="off" spellcheck="false" maxlength="254"
+                   aria-describedby="bd-note" required>
+            <button type="submit">Prenumeruoti</button>
+        </form>
+        <p class="mm-fine" id="bd-note">Šlamštas iš vidaus · be jokių blokerių</p>
     </section>
     </main>
     <footer class="footer">

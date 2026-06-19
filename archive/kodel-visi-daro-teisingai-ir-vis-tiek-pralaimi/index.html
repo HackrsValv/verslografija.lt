@@ -17,18 +17,22 @@
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/style.css">
 </head>
-<body>
-    <header class="post-masthead">
-        <a href="/" class="post-masthead-logo" aria-label="Verslo Grafija">
-            <img src="/assets/logo-verslografija.svg" alt="" width="40" height="40">
-            <span>Verslo Grafija</span>
-        </a>
-    </header>
+<body class="mm">
+    <div class="mm-topbar">
+        <header class="mm-plate mm-plate--slim">
+            <a href="/" class="mm-mark mm-mark--sm" aria-label="Verslo Grafija">V</a>
+            <a href="/" class="mm-wordmark mm-wordmark--sm">Verslo <span>Grafija</span></a>
+            <nav class="mm-nav mm-nav--row">
+                <a href="/">Pradžia</a>
+                <a href="/archive/">Archyvas</a>
+            </nav>
+        </header>
+    </div>
     <main>
         <article class="post">
             <span class="post-date">2026-06-12</span>
-            <h1 class="post-title">Kodėl visi daro teisingai ir vis tiek pralaimi</h1>
-            <div class="post-cover"><img src="https://assets.buttondown.email/images/b396f3d8-8379-41b1-9216-68590a054cea.png" alt="Kodėl visi daro teisingai ir vis tiek pralaimi — iliustracija" loading="eager" decoding="async"></div>
+            <h1 class="post-title" style="view-transition-name:title-kodel-visi-daro-teisingai-ir-vis-tiek-pralaimi">Kodėl visi daro teisingai ir vis tiek pralaimi</h1>
+            <div class="post-cover" style="view-transition-name:cover-kodel-visi-daro-teisingai-ir-vis-tiek-pralaimi"><img src="https://assets.buttondown.email/images/b396f3d8-8379-41b1-9216-68590a054cea.png" alt="Kodėl visi daro teisingai ir vis tiek pralaimi — iliustracija" loading="eager" decoding="async"></div>
             <div class="post-body">
 <p><em>Auditorija.</em> Profesorius iškelia dešimt eurų ir sako: parduodu už didžiausią pasiūlymą, bet su viena sąlyga — kas pasiūlo antrą didžiausią kainą, ją vis tiek sumoka, nors ir nieko už tai negauna.</p>
 <p>Studentai nusijuokia ir pradeda. Vienas pasiūlo eurą, kitas du. O kažkur ties devyniais nutinka keista situacija. Tu siūlai devynis, aš dešimt. Bet jei sustosiu ties dešimt, man apsimoka pasiūlyti vienuolika: pralaimėjęs atiduočiau devynis už nieką, o laimėjęs prarasiu tik vieną. Banknotas vertas dešimt, o kaina už jį jau perkopė dvidešimt.[^1]</p>
@@ -54,20 +58,19 @@
         <a class="post-nav-prev" href="/archive/story-points/">&larr; Pasakų taškai</a>
         <a class="post-nav-next" href="/archive/duok-povilui-jis-dabar-laisvesnis/">Duok Povilui, jis dabar laisvesnis &rarr;</a>
     </nav>
-    <section class="subscribe" id="prenumeruoti">
-        <div class="subscribe-inner">
-            <p class="subscribe-tagline">Visi kažką žiūrim, o kartais ir parašom</p>
-            <form action="https://buttondown.com/api/emails/embed-subscribe/verslografija"
-                  method="post" target="popupwindow" class="subscribe-form">
-                <label for="bd-email" class="sr-only">El. paštas</label>
-                <input type="email" name="email" id="bd-email" placeholder="El. paštas"
-                       autocomplete="email" inputmode="email" autocapitalize="off"
-                       autocorrect="off" spellcheck="false" maxlength="254"
-                       aria-describedby="bd-note" required>
-                <button type="submit">Prenumeruoti</button>
-            </form>
-            <p class="subscribe-note" id="bd-note">Šlamštas iš vidaus</p>
-        </div>
+    <section class="mm-coupon" id="prenumeruoti">
+        <h2>Šlamštas, kurį verta atidaryti</h2>
+        <p>Visi kažką žiūrim, o kartais ir parašom.</p>
+        <form action="https://buttondown.com/api/emails/embed-subscribe/verslografija"
+              method="post" target="popupwindow">
+            <label for="bd-email" class="sr-only">El. paštas</label>
+            <input type="email" name="email" id="bd-email" placeholder="El. paštas"
+                   autocomplete="email" inputmode="email" autocapitalize="off"
+                   autocorrect="off" spellcheck="false" maxlength="254"
+                   aria-describedby="bd-note" required>
+            <button type="submit">Prenumeruoti</button>
+        </form>
+        <p class="mm-fine" id="bd-note">Šlamštas iš vidaus · be jokių blokerių</p>
     </section>
     </main>
     <footer class="footer">

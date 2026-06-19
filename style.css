@@ -40,6 +40,13 @@
     --input-bg: #fbf8f1;
     --placeholder: #6b6b6b;
     --width: 900px;
+    /* Mad Men spot palette */
+    --oxblood: #8b1a1a;
+    --mustard: #dca33c;
+    --teal: #2c6b64;
+    --orange: #c5532a;
+    --sky: #5b7c8c;
+    --mm-wide: 1180px;
 }
 
 /* === RESET === */
@@ -774,3 +781,240 @@ body::after {
     a { color: var(--text); border: none; }
     .featured-link, .card { border-color: #ccc; }
 }
+
+/* ============================================================
+   OVERDRIVE — THE PRINTING PRESS
+   Amplifies the newsprint identity. All motion is progressively
+   enhanced and falls back to the clean static layout.
+   ============================================================ */
+
+/* Cross-document shared-element morph (Chrome/Safari; no-op elsewhere) */
+@view-transition { navigation: auto; }
+
+/* --- Enormous broadsheet masthead --- */
+.masthead-title {
+    font-size: clamp(2.75rem, 13vw, 9rem);
+    letter-spacing: 0.015em;
+    line-height: 0.9;
+    text-shadow: 0.012em 0 0 var(--accent), -0.012em 0 0 rgba(38, 56, 92, 0.32);
+}
+
+.featured-title { font-size: clamp(1.9rem, 6vw, 3.6rem); line-height: 1.02; }
+
+/* --- Halftone-develop covers: dots resolve into ink as they scroll in --- */
+.featured-image, .card-image, .post-cover { position: relative; }
+
+.featured-image::after,
+.card-image::after,
+.post-cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background-image: radial-gradient(var(--text) 30%, transparent 31%);
+    background-size: 5px 5px;
+    mix-blend-mode: multiply;
+    opacity: 0.15; /* constant newsprint halftone screen over every cover */
+}
+
+/* Covers resolve from coarse ink to full as they scroll in (enhanced only) */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .featured-image::after,
+    .card-image::after,
+    .post-cover::after {
+        animation: halftone-coarsen linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 90%;
+    }
+  }
+}
+
+@keyframes halftone-coarsen {
+    from { opacity: 0.55; background-size: 9px 9px; }
+    to   { opacity: 0.15; background-size: 5px 5px; }
+}
+
+/* --- Editorial drop cap on every article --- */
+.post-body > p:first-of-type::first-letter {
+    font-family: var(--display);
+    float: left;
+    font-size: 4.4em;
+    line-height: 0.78;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin: 0.04em 0.1em 0 0;
+    color: var(--accent);
+}
+
+/* --- Riso channel-split on interactive titles (hover) --- */
+.featured-link:hover .featured-title,
+.card:hover .card-title {
+    color: var(--text);
+    text-shadow: 0.045em 0 0 var(--accent), -0.04em 0 0 rgba(38, 56, 92, 0.55);
+}
+
+/* --- Slow paper-grain drift --- */
+@media (prefers-reduced-motion: no-preference) {
+    body::after { animation: grain-drift 6s steps(5) infinite; }
+}
+
+@keyframes grain-drift {
+    0%   { background-position: 0 0; }
+    100% { background-position: 256px 192px; }
+}
+
+/* --- Reduced-motion: kill view-transition animations too --- */
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) { animation: none !important; }
+}
+
+/* ============================================================
+   MAD MEN — 1960s ad-agency landing
+   ============================================================ */
+
+body.mm { overflow-x: hidden; }
+.mm .wrap { max-width: var(--mm-wide); margin: 0 auto; padding: 0 28px; }
+
+/* halftone illustration */
+.mm-tone { position: relative; overflow: hidden; display: block; background: var(--paper); }
+.mm-tone img { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.08) saturate(1.05); }
+.mm-tone::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(var(--text) 32%, transparent 33%);
+    background-size: 5px 5px; mix-blend-mode: multiply; opacity: 0.22;
+}
+.mm-tone--ph {
+    display: grid; place-items: center; background: var(--text); color: var(--bg);
+    font-family: var(--display); font-weight: 800; font-size: 4rem;
+}
+
+/* nameplate */
+.mm-meta {
+    display: flex; justify-content: space-between; gap: 1rem;
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 18px 0 14px; border-bottom: 2px solid var(--rule);
+}
+.mm-plate {
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px;
+    padding: 30px 0 22px; border-bottom: 6px double var(--rule);
+}
+.mm-mark {
+    width: 84px; height: 84px; border-radius: 50%; background: var(--oxblood);
+    display: grid; place-items: center; color: var(--bg);
+    font-family: var(--display); font-weight: 800; font-size: 3.4rem; line-height: 1;
+}
+.mm-wordmark {
+    font-family: var(--display); font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.01em; line-height: 0.84; text-align: center;
+    font-size: clamp(2.6rem, 9.5vw, 7.4rem); margin: 0;
+}
+.mm-wordmark span { color: var(--oxblood); }
+.mm-nav {
+    display: flex; flex-direction: column; gap: 6px; text-align: right;
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase;
+}
+.mm-nav a { border-bottom: 1px solid transparent; }
+.mm-nav a:hover { color: var(--oxblood); border-color: var(--oxblood); }
+
+/* hero big idea */
+.mm-hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: end; padding: 64px 0 34px; }
+.mm-kicker {
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--oxblood); margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+.mm-kicker::before { content: ''; width: 34px; height: 2px; background: var(--oxblood); }
+.mm-hero-line {
+    font-family: var(--display); font-weight: 800; text-transform: uppercase;
+    line-height: 0.86; letter-spacing: -0.005em; font-size: clamp(2.6rem, 7.6vw, 6.4rem); margin: 0;
+    overflow-wrap: break-word;
+}
+.mm-hero-line em { font-style: normal; color: var(--oxblood); }
+.mm-hero-line .knock { background: var(--text); color: var(--bg); padding: 0 0.1em; box-decoration-break: clone; }
+.mm-hero-sub { font-family: var(--body); font-style: italic; font-size: 1.18rem; color: var(--muted); margin-top: 22px; max-width: 34ch; }
+.mm-hero-fig { position: relative; display: block; }
+.mm-disc { position: absolute; left: -42px; top: -42px; width: 116px; height: 116px; border-radius: 50%; background: var(--mustard); z-index: 0; }
+.mm-hero-fig .mm-tone { border: 3px solid var(--rule); aspect-ratio: 4 / 5; position: relative; z-index: 1; }
+
+/* featured band */
+.mm-band { background: var(--teal); color: var(--bg); margin-top: 8px; }
+.mm-band-inner {
+    max-width: var(--mm-wide); margin: 0 auto; padding: 40px 28px;
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 28px;
+}
+.mm-band-date { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.26em; text-transform: uppercase; opacity: 0.85; flex: 0 0 100%; }
+.mm-band-title {
+    font-family: var(--display); font-weight: 800; text-transform: uppercase; line-height: 0.92;
+    font-size: clamp(1.9rem, 4.6vw, 3.4rem); margin: 0; flex: 1 1 60%;
+}
+.mm-band-cta {
+    font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em;
+    font-size: 0.9rem; background: var(--mustard); color: var(--text); padding: 12px 26px; white-space: nowrap;
+}
+.mm-band-inner:hover .mm-band-cta { background: var(--bg); }
+
+/* three columns */
+.mm-sechead {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+    padding: 56px 0 22px; border-bottom: 3px solid var(--rule);
+}
+.mm-sechead h2 { font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; font-size: 1.5rem; margin: 0; }
+.mm-sechead span { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); }
+.mm-three { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 3px solid var(--rule); }
+.mm-col { display: block; padding: 26px 22px 30px; border-right: 3px solid var(--rule); min-width: 0; }
+.mm-col:last-child { border-right: none; }
+.mm-no { font-family: var(--display); font-weight: 800; font-size: 4.4rem; line-height: 0.8; color: var(--c); display: block; }
+.mm-col .mm-tone { aspect-ratio: 4 / 3; border: 2px solid var(--rule); margin: 14px 0 16px; }
+.mm-col-date { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+.mm-col-title { font-family: var(--display); font-weight: 800; text-transform: uppercase; line-height: 0.98; font-size: 1.32rem; margin: 6px 0 0; overflow-wrap: break-word; }
+.mm-col:hover .mm-col-title { color: var(--c); }
+.mm-col:hover .mm-tone { border-color: var(--c); }
+
+/* subscribe coupon */
+.mm-coupon {
+    background: var(--oxblood); color: var(--bg); margin-top: 60px; padding: 56px 28px; text-align: center;
+}
+.mm-coupon h2 { font-family: var(--display); font-weight: 800; text-transform: uppercase; line-height: 0.9; font-size: clamp(2rem, 6vw, 4rem); max-width: 16ch; margin: 0 auto 0.4em; }
+.mm-coupon p { font-family: var(--body); font-style: italic; font-size: 1.1rem; opacity: 0.9; margin: 0 0 26px; }
+.mm-coupon form { display: flex; max-width: 460px; margin: 0 auto; border: 2px solid var(--bg); }
+.mm-coupon input { flex: 1; min-width: 0; border: none; background: transparent; color: var(--bg); font-family: var(--mono); font-size: 0.9rem; padding: 15px 18px; }
+.mm-coupon input:focus { outline: 2px solid var(--mustard); outline-offset: -2px; }
+.mm-coupon input::placeholder { color: rgba(242, 236, 224, 0.6); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.78rem; }
+.mm-coupon button { font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; background: var(--mustard); color: var(--text); border: none; padding: 0 30px; cursor: pointer; }
+.mm-coupon button:hover { background: var(--bg); }
+.mm-fine { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.72; margin: 16px 0 0; }
+
+/* footer */
+.mm-foot {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    padding: 26px 0; border-top: 6px double var(--rule);
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase;
+}
+.mm-foot-ar { color: var(--oxblood); }
+
+@media (max-width: 820px) {
+    .mm-hero { grid-template-columns: 1fr; gap: 28px; padding: 44px 0 26px; }
+    .mm-three { grid-template-columns: 1fr; }
+    .mm-col { border-right: none; border-bottom: 3px solid var(--rule); }
+    .mm-col:last-child { border-bottom: none; }
+    .mm-plate { grid-template-columns: auto 1fr; gap: 16px; }
+    .mm-plate .mm-nav { display: none; }
+    .mm-mark { width: 60px; height: 60px; font-size: 2.4rem; }
+}
+
+/* --- Slim nameplate for reading pages (post + archive) --- */
+.mm-topbar { max-width: var(--width); margin: 0 auto; padding: 0 1.5rem; }
+.mm-plate--slim {
+    grid-template-columns: auto 1fr auto; align-items: center; gap: 16px;
+    padding: 16px 0; border-bottom: 3px solid var(--rule);
+}
+.mm-mark--sm { width: 44px; height: 44px; font-size: 1.7rem; }
+.mm-wordmark--sm { font-size: 1.4rem; line-height: 1; letter-spacing: 0.05em; text-align: left; }
+.mm-nav--row { flex-direction: row; gap: 1.25rem; align-items: center; }
+.mm .post-date { color: var(--oxblood); }
+.mm .post-cover { border-color: var(--rule); }
+@media (max-width: 560px) { .mm-nav--row { display: none; } }
