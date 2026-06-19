@@ -774,3 +774,93 @@ body::after {
     a { color: var(--text); border: none; }
     .featured-link, .card { border-color: #ccc; }
 }
+
+/* ============================================================
+   OVERDRIVE — THE PRINTING PRESS
+   Amplifies the newsprint identity. All motion is progressively
+   enhanced and falls back to the clean static layout.
+   ============================================================ */
+
+/* Cross-document shared-element morph (Chrome/Safari; no-op elsewhere) */
+@view-transition { navigation: auto; }
+
+/* --- Enormous broadsheet masthead --- */
+.masthead-title {
+    font-size: clamp(2.75rem, 13vw, 9rem);
+    letter-spacing: 0.015em;
+    line-height: 0.9;
+    text-shadow: 0.012em 0 0 var(--accent), -0.012em 0 0 rgba(38, 56, 92, 0.32);
+}
+
+.featured-title { font-size: clamp(1.9rem, 6vw, 3.6rem); line-height: 1.02; }
+
+/* --- Halftone-develop covers: dots resolve into ink as they scroll in --- */
+.featured-image, .card-image, .post-cover { position: relative; }
+
+.featured-image::after,
+.card-image::after,
+.post-cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background-image: radial-gradient(var(--text) 30%, transparent 31%);
+    background-size: 5px 5px;
+    mix-blend-mode: multiply;
+    opacity: 0.15; /* constant newsprint halftone screen over every cover */
+}
+
+/* Covers resolve from coarse ink to full as they scroll in (enhanced only) */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .featured-image::after,
+    .card-image::after,
+    .post-cover::after {
+        animation: halftone-coarsen linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 90%;
+    }
+  }
+}
+
+@keyframes halftone-coarsen {
+    from { opacity: 0.55; background-size: 9px 9px; }
+    to   { opacity: 0.15; background-size: 5px 5px; }
+}
+
+/* --- Editorial drop cap on every article --- */
+.post-body > p:first-of-type::first-letter {
+    font-family: var(--display);
+    float: left;
+    font-size: 4.4em;
+    line-height: 0.78;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin: 0.04em 0.1em 0 0;
+    color: var(--accent);
+}
+
+/* --- Riso channel-split on interactive titles (hover) --- */
+.featured-link:hover .featured-title,
+.card:hover .card-title {
+    color: var(--text);
+    text-shadow: 0.045em 0 0 var(--accent), -0.04em 0 0 rgba(38, 56, 92, 0.55);
+}
+
+/* --- Slow paper-grain drift --- */
+@media (prefers-reduced-motion: no-preference) {
+    body::after { animation: grain-drift 6s steps(5) infinite; }
+}
+
+@keyframes grain-drift {
+    0%   { background-position: 0 0; }
+    100% { background-position: 256px 192px; }
+}
+
+/* --- Reduced-motion: kill view-transition animations too --- */
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) { animation: none !important; }
+}

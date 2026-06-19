@@ -76,7 +76,7 @@ def post_page(post, prev, nxt):
     cover = ""
     if post["image"]:
         cover = (
-            f'<div class="post-cover"><img src="{post["image"]}" '
+            f'<div class="post-cover" style="view-transition-name:cover-{post["slug"]}"><img src="{post["image"]}" '
             f'alt="{escape(alt)}" loading="eager" decoding="async"></div>'
         )
     body_html = render.article(post["body"])
@@ -89,7 +89,7 @@ def post_page(post, prev, nxt):
     <main>
         <article class="post">
             <span class="post-date">{post["date"]}</span>
-            <h1 class="post-title">{escape(post["title"])}</h1>
+            <h1 class="post-title" style="view-transition-name:title-{post["slug"]}">{escape(post["title"])}</h1>
             {cover}
             <div class="post-body">
 {body_html}
@@ -148,7 +148,7 @@ def archive_index(posts):
 
 def _land_card(post):
     cover = (
-        f'<div class="card-image"><img src="{post["image"]}" '
+        f'<div class="card-image" style="view-transition-name:cover-{post["slug"]}"><img src="{post["image"]}" '
         f'alt="{escape(post["title"])} — iliustracija" loading="lazy" decoding="async"></div>'
         if post["image"]
         else '<div class="card-image card-image--placeholder"><span class="card-image-v">V</span></div>'
@@ -157,7 +157,7 @@ def _land_card(post):
                     {cover}
                     <div class="card-content">
                         <span class="card-date">{post['date']}</span>
-                        <h3 class="card-title">{escape(post['title'])}</h3>
+                        <h3 class="card-title" style="view-transition-name:title-{post['slug']}">{escape(post['title'])}</h3>
                     </div>
                 </a>"""
 
@@ -168,7 +168,7 @@ def landing(posts):
     f_alt = f'{featured["title"]} — iliustracija'
     if featured["image"]:
         f_img = (
-            f'<div class="featured-image"><img src="{featured["image"]}" '
+            f'<div class="featured-image" style="view-transition-name:cover-{featured["slug"]}"><img src="{featured["image"]}" '
             f'alt="{escape(f_alt)}" loading="eager" decoding="async"></div>'
         )
     else:
@@ -219,7 +219,7 @@ def landing(posts):
                 {f_img}
                 <div class="featured-content">
                     <span class="featured-date">{featured['date']}</span>
-                    <h2 class="featured-title">{escape(featured['title'])}</h2>
+                    <h2 class="featured-title" style="view-transition-name:title-{featured['slug']}">{escape(featured['title'])}</h2>
                     <p class="featured-excerpt">{escape(featured['excerpt'])}</p>
                     <span class="featured-cta">Skaityti &rarr;</span>
                 </div>
