@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "pasaku-taskai",
+    "subject": "Pasakų taškai",
+    "publish_date": "2026-06-05T20:00:00.000000Z",
+    "description": "Apie tai, kodėl istorijų taškai dekoreliuoja nuo laiko.",
+    "image": "https://assets.buttondown.email/images/cover-pt.png",
+    "status": "sent",
+    "body": "![cover](https://assets.buttondown.email/images/cover-pt.png)\n\nProfesorius iškelia ranką.\n\n## Pirmas skyrius\n\nTekstas su [nuoroda į kitą įrašą](https://visa.verslografija.lt/archive/story-points/) viduje.\n\n> Citata čia.\n\nIšnaša.[^1]\n\n[^1]: Išnašos tekstas."
+  },
+  {
+    "slug": "ziurek-ka-darau",
+    "subject": "Žiūrėk ką darau, ne ką sakau",
+    "publish_date": "2025-07-24T20:37:06.000000Z",
+    "description": "Apie atotrūkį tarp deklaracijų ir veiksmų.",
+    "image": "https://assets.buttondown.email/images/cover-zk.png",
+    "status": "sent",
+    "body": "<!-- buttondown-editor-mode: fancy --><figure><img src=\"https://assets.buttondown.email/images/cover-zk.png\" alt=\"cover\"></figure><p>Pirmas sakinys.</p><h2>Skyrius</h2><p>Antras <strong>sakinys</strong> su <a href=\"https://visa.verslografija.lt/archive/story-points/\">nuoroda</a>.</p><figure><img src=\"https://assets.buttondown.email/images/inline.png\" alt=\"diagrama\"><figcaption>Paaiškinimas</figcaption></figure>"
+  }
+]
