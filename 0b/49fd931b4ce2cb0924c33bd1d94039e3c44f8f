@@ -1,0 +1,23 @@
+style.css
+  s_c178244b0011e6::t_58f5d6de2b2904 586-660
+pages.py
+  s_c178244b0011e6::t_aaf90cf777db38 97-101,111-115,117,124-126
+  s_c178244b0011e6::t_855f88c48beb0b 79-89
+  s_c178244b0011e6::t_d81d513d47317a 134-136,138,140-146,160-165,167-168,171-173
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "0b49fd931b4ce2cb0924c33bd1d94039e3c44f8f",
+  "prompts": {},
+  "sessions": {
+    "s_c178244b0011e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb62ed7f-0873-439a-8be2-d645eda6eb8f",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
