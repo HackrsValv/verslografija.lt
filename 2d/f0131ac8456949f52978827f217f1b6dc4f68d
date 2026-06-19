@@ -1,0 +1,20 @@
+style.css
+  s_c178244b0011e6::t_4f5bbee0648092 381
+  s_c178244b0011e6::t_651cd7fc735818 367
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "2df0131ac8456949f52978827f217f1b6dc4f68d",
+  "prompts": {},
+  "sessions": {
+    "s_c178244b0011e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb62ed7f-0873-439a-8be2-d645eda6eb8f",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
