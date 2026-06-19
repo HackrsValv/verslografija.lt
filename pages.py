@@ -46,29 +46,32 @@ def _head(title, description, canonical, image):
 
 
 def _masthead():
-    return """    <header class="post-masthead">
-        <a href="/" class="post-masthead-logo" aria-label="Verslo Grafija">
-            <img src="/assets/logo-verslografija.svg" alt="" width="40" height="40">
-            <span>Verslo Grafija</span>
-        </a>
-    </header>"""
+    return """    <div class="mm-topbar">
+        <header class="mm-plate mm-plate--slim">
+            <a href="/" class="mm-mark mm-mark--sm" aria-label="Verslo Grafija">V</a>
+            <a href="/" class="mm-wordmark mm-wordmark--sm">Verslo <span>Grafija</span></a>
+            <nav class="mm-nav mm-nav--row">
+                <a href="/">Pradžia</a>
+                <a href="/archive/">Archyvas</a>
+            </nav>
+        </header>
+    </div>"""
 
 
 def _subscribe():
-    return """    <section class="subscribe" id="prenumeruoti">
-        <div class="subscribe-inner">
-            <p class="subscribe-tagline">Visi kažką žiūrim, o kartais ir parašom</p>
-            <form action="https://buttondown.com/api/emails/embed-subscribe/verslografija"
-                  method="post" target="popupwindow" class="subscribe-form">
-                <label for="bd-email" class="sr-only">El. paštas</label>
-                <input type="email" name="email" id="bd-email" placeholder="El. paštas"
-                       autocomplete="email" inputmode="email" autocapitalize="off"
-                       autocorrect="off" spellcheck="false" maxlength="254"
-                       aria-describedby="bd-note" required>
-                <button type="submit">Prenumeruoti</button>
-            </form>
-            <p class="subscribe-note" id="bd-note">Šlamštas iš vidaus</p>
-        </div>
+    return """    <section class="mm-coupon" id="prenumeruoti">
+        <h2>Šlamštas, kurį verta atidaryti</h2>
+        <p>Visi kažką žiūrim, o kartais ir parašom.</p>
+        <form action="https://buttondown.com/api/emails/embed-subscribe/verslografija"
+              method="post" target="popupwindow">
+            <label for="bd-email" class="sr-only">El. paštas</label>
+            <input type="email" name="email" id="bd-email" placeholder="El. paštas"
+                   autocomplete="email" inputmode="email" autocapitalize="off"
+                   autocorrect="off" spellcheck="false" maxlength="254"
+                   aria-describedby="bd-note" required>
+            <button type="submit">Prenumeruoti</button>
+        </form>
+        <p class="mm-fine" id="bd-note">Šlamštas iš vidaus · be jokių blokerių</p>
     </section>"""
 
 
@@ -97,7 +100,7 @@ def post_page(post, prev, nxt):
     return f"""<!DOCTYPE html>
 <html lang="lt">
 {head}
-<body>
+<body class="mm">
 {_masthead()}
     <main>
         <article class="post">
@@ -140,7 +143,7 @@ def archive_index(posts):
     return f"""<!DOCTYPE html>
 <html lang="lt">
 {head}
-<body>
+<body class="mm">
 {_masthead()}
     <main>
         <section class="archive">

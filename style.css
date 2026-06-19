@@ -1002,6 +1002,19 @@ body.mm { overflow-x: hidden; }
     .mm-col { border-right: none; border-bottom: 3px solid var(--rule); }
     .mm-col:last-child { border-bottom: none; }
     .mm-plate { grid-template-columns: auto 1fr; gap: 16px; }
-    .mm-nav { display: none; }
+    .mm-plate .mm-nav { display: none; }
     .mm-mark { width: 60px; height: 60px; font-size: 2.4rem; }
 }
+
+/* --- Slim nameplate for reading pages (post + archive) --- */
+.mm-topbar { max-width: var(--width); margin: 0 auto; padding: 0 1.5rem; }
+.mm-plate--slim {
+    grid-template-columns: auto 1fr auto; align-items: center; gap: 16px;
+    padding: 16px 0; border-bottom: 3px solid var(--rule);
+}
+.mm-mark--sm { width: 44px; height: 44px; font-size: 1.7rem; }
+.mm-wordmark--sm { font-size: 1.4rem; line-height: 1; letter-spacing: 0.05em; text-align: left; }
+.mm-nav--row { flex-direction: row; gap: 1.25rem; align-items: center; }
+.mm .post-date { color: var(--oxblood); }
+.mm .post-cover { border-color: var(--rule); }
+@media (max-width: 560px) { .mm-nav--row { display: none; } }
