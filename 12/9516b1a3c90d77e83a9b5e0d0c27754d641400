@@ -1,0 +1,21 @@
+index.html
+  s_c178244b0011e6::t_fd627f86c21ba2 6
+pages.py
+  s_c178244b0011e6::t_25a87d667a1333 188
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "129516b1a3c90d77e83a9b5e0d0c27754d641400",
+  "prompts": {},
+  "sessions": {
+    "s_c178244b0011e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb62ed7f-0873-439a-8be2-d645eda6eb8f",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
