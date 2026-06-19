@@ -37,7 +37,8 @@
     --accent: #8b1a1a;
     --accent-light: rgba(139, 26, 26, 0.08);
     --rule: #1a1a1a;
-    --rule-light: #bbb;
+    --input-bg: #fbf8f1;
+    --placeholder: #6b6b6b;
     --width: 900px;
 }
 
@@ -59,6 +60,20 @@ body {
 a { color: inherit; text-decoration: none; }
 
 img { display: block; max-width: 100%; height: auto; }
+
+/* Keyboard focus: visible ring on every interactive element (parity with :hover) */
+:where(a, button, input):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* Long unbroken words (compounds, URLs) wrap instead of overflowing their column */
+.masthead-title, .featured-title, .card-title, .featured-excerpt {
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+.card-content { min-width: 0; }
 
 .sr-only {
     position: absolute;
@@ -184,12 +199,13 @@ body::after {
 .featured-image {
     position: relative;
     overflow: hidden;
-    max-height: 440px;
+    aspect-ratio: 2 / 1;
+    background: var(--paper);
 }
 
 .featured-image img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     filter: contrast(1.1) grayscale(0.05);
 }
@@ -231,6 +247,7 @@ body::after {
     line-height: 1.65;
     color: var(--muted);
     margin: 0 0 1rem;
+    max-width: 62ch;
 }
 
 .featured-cta {
@@ -292,7 +309,8 @@ body::after {
     filter: contrast(1.1) grayscale(0.05);
 }
 
-.card-image--placeholder {
+.card-image--placeholder,
+.featured-image--placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -377,8 +395,9 @@ body::after {
     font-family: var(--mono);
     font-size: 0.875rem;
     padding: 0.75rem 1rem;
+    min-height: 44px;
     border: 2px solid var(--rule);
-    background: #fff;
+    background: var(--input-bg);
     color: var(--text);
     width: 280px;
     max-width: 100%;
@@ -386,12 +405,11 @@ body::after {
 }
 
 .subscribe-form input[type="email"]:focus {
-    outline: none;
     border-color: var(--accent);
 }
 
 .subscribe-form input[type="email"]::placeholder {
-    color: #999;
+    color: var(--placeholder);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-size: 0.75rem;
@@ -402,6 +420,7 @@ body::after {
     font-size: 0.75rem;
     font-weight: 800;
     padding: 0.75rem 2rem;
+    min-height: 44px;
     background: var(--text);
     border: none;
     color: var(--bg);
@@ -415,6 +434,10 @@ body::after {
     background: var(--accent);
 }
 
+.subscribe-form button:active {
+    transform: translateY(1px);
+}
+
 .subscribe-note {
     font-family: var(--mono);
     font-size: 0.625rem;
@@ -422,30 +445,6 @@ body::after {
     letter-spacing: 0.15em;
     color: var(--muted);
     margin: 1rem 0 0;
-}
-
-/* === ABOUT === */
-
-.about {
-    max-width: var(--width);
-    margin: 3rem auto;
-    padding: 0 1.5rem;
-}
-
-.about-content {
-    max-width: 680px;
-}
-
-.about-content p {
-    font-family: var(--body);
-    font-size: 1rem;
-    line-height: 1.65;
-    margin: 0 0 1.25rem;
-}
-
-.about-content p:last-child {
-    font-weight: 700;
-    margin-bottom: 0;
 }
 
 /* === FOOTER === */
@@ -493,8 +492,6 @@ body::after {
     .masthead-title { font-size: 2rem; }
 
     .featured-title { font-size: 1.5rem; }
-
-    .featured-image { max-height: 280px; }
 
     .featured-content { padding: 1.25rem 1.5rem 1.5rem; }
 
@@ -550,9 +547,36 @@ body::after {
     .subscribe { padding: 0 1rem; }
     .subscribe-form input[type="email"] { width: 100%; }
 
-    .about { padding: 0 1rem; }
-
     .footer { padding: 0 1rem 1.5rem; }
+}
+
+/* === TOUCH INPUT === */
+/* Coarse pointers (phone/tablet): grow the tiny mono links to a 44px tap area.
+   A transparent ::before slab carries the hit region so the visible text and
+   its underline stay tight. Mouse/desktop layout is untouched. */
+
+@media (pointer: coarse) {
+    .masthead-nav a,
+    .footer-archive {
+        position: relative;
+    }
+
+    .masthead-nav a::before,
+    .footer-archive::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 44px;
+        min-width: 44px;
+    }
+
+    .masthead-nav {
+        gap: 1.25rem 2rem;
+        flex-wrap: wrap;
+    }
 }
 
 /* === PRINT === */

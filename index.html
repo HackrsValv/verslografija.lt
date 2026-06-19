@@ -30,7 +30,7 @@
     <header class="masthead">
         <div class="masthead-inner">
             <a href="/" class="masthead-logo" aria-label="Verslo Grafija">
-                <img src="assets/logo-verslografija.svg" alt="V" width="64" height="64">
+                <img src="assets/logo-verslografija.svg" alt="" width="64" height="64">
             </a>
             <h1 class="masthead-title">Verslo Grafija</h1>
             <p class="masthead-tagline">Visi kažką žiūrim, o kartais ir parašom</p>
@@ -110,7 +110,7 @@
         <!-- === SUBSCRIBE === -->
         <section class="subscribe" id="prenumeruoti">
             <div class="subscribe-inner">
-                <img src="assets/logo-verslografija.svg" alt="V" class="subscribe-logo" width="80" height="80">
+                <img src="assets/logo-verslografija.svg" alt="" class="subscribe-logo" width="80" height="80">
                 <p class="subscribe-tagline">Visi kažką žiūrim, o kartais ir parašom</p>
                 <form action="https://buttondown.com/api/emails/embed-subscribe/verslografija"
                       method="post"
@@ -121,10 +121,17 @@
                            name="email"
                            id="bd-email"
                            placeholder="El. paštas"
+                           autocomplete="email"
+                           inputmode="email"
+                           autocapitalize="off"
+                           autocorrect="off"
+                           spellcheck="false"
+                           maxlength="254"
+                           aria-describedby="bd-note"
                            required>
                     <button type="submit">Prenumeruoti</button>
                 </form>
-                <p class="subscribe-note">Šlamštas iš vidaus</p>
+                <p class="subscribe-note" id="bd-note">Šlamštas iš vidaus</p>
             </div>
         </section>
 
