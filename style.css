@@ -583,3 +583,78 @@ body.mm { overflow-x: hidden; }
 .mm .post-date { color: var(--oxblood); }
 .mm .post-cover { border-color: var(--rule); }
 @media (max-width: 560px) { .mm-nav--row { display: none; } }
+
+/* ============================================================
+   MAD MEN — reading pages (post + archive)
+   ============================================================ */
+
+.mm-post { max-width: 860px; margin: 0 auto; padding: 0 28px; }
+.mm-post-head { padding: 40px 0 26px; }
+.mm-post-title {
+    font-family: var(--display); font-weight: 800; text-transform: uppercase;
+    line-height: 0.9; letter-spacing: -0.01em; margin: 8px 0 0;
+    font-size: clamp(2.4rem, 6vw, 4.6rem); overflow-wrap: break-word;
+}
+
+.mm-cover { position: relative; margin: 0 0 38px; }
+.mm-disc--sm { position: absolute; border-radius: 50%; background: var(--mustard); z-index: 0; }
+.mm-cover .mm-disc--sm { left: -34px; top: -34px; width: 92px; height: 92px; }
+.mm-cover .mm-tone { display: block; border: 3px solid var(--rule); aspect-ratio: 16 / 9; position: relative; z-index: 1; }
+
+/* readable, art-directed body column */
+.post-body.mm-read { max-width: 680px; margin: 0 auto; font-size: 1.15rem; line-height: 1.75; }
+.post-body.mm-read > p:first-of-type::first-letter {
+    font-family: var(--display); float: left; font-size: 5em; line-height: 0.72;
+    font-weight: 800; color: var(--oxblood); margin: 0.04em 0.12em 0 0; text-transform: uppercase;
+}
+.post-body.mm-read h2 {
+    font-family: var(--display); font-weight: 800; text-transform: uppercase;
+    font-size: 1.7rem; letter-spacing: 0.01em; line-height: 1; margin: 2.6rem 0 1rem;
+    padding-top: 1rem; border-top: 3px solid var(--rule);
+}
+.post-body.mm-read h3 { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 1.25rem; margin: 2rem 0 0.6rem; }
+.post-body.mm-read a { color: var(--oxblood); border-bottom: 1px solid var(--oxblood); }
+.post-body.mm-read blockquote {
+    border: none; margin: 2.6rem 0; padding: 0; text-align: center;
+    font-family: var(--display); font-weight: 700; text-transform: uppercase;
+    font-size: clamp(1.5rem, 3.6vw, 2.4rem); line-height: 1.05; color: var(--oxblood); letter-spacing: 0.01em;
+}
+.post-body.mm-read blockquote p { margin: 0; }
+.post-body.mm-read ul, .post-body.mm-read ol { margin: 0 0 1.4rem; padding-left: 1.4rem; }
+.post-body.mm-read li { margin: 0 0 0.5rem; }
+.post-body.mm-read figure { margin: 2rem 0; }
+.post-body.mm-read figure img { width: 100%; border: 2px solid var(--rule); }
+.post-body.mm-read sup a { border-bottom: none; }
+
+/* prev / next bold issue cards */
+.mm-prevnext { display: grid; grid-template-columns: 1fr 1fr; max-width: var(--mm-wide); margin: 60px auto 0; border-top: 3px solid var(--rule); }
+.mm-pn { display: block; padding: 28px; border-right: 3px solid var(--rule); background: var(--c); color: var(--bg); }
+.mm-pn:last-child { border-right: none; }
+.mm-pn--empty { background: transparent; }
+.mm-pn-label { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.85; display: block; margin-bottom: 10px; }
+.mm-pn-title { font-family: var(--display); font-weight: 800; text-transform: uppercase; line-height: 0.98; font-size: 1.4rem; display: block; }
+.mm-pn:hover { filter: brightness(1.07); }
+
+/* archive — back-issue catalog */
+.mm-arch-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 48px 0 0; }
+.mm-arch-head h1 { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: clamp(2.4rem, 7vw, 5rem); letter-spacing: 0.01em; line-height: 0.9; margin: 0; }
+.mm-arch-head span { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+.mm-issues { border-top: 3px solid var(--rule); margin-top: 22px; }
+.mm-issue { display: grid; grid-template-columns: auto 6rem 1fr auto; align-items: center; gap: 22px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
+.mm-issue-no { font-family: var(--display); font-weight: 800; font-size: 2.6rem; line-height: 0.8; color: var(--c); }
+.mm-issue-date { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.mm-issue-title { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: clamp(1.2rem, 2.6vw, 1.9rem); line-height: 1; margin: 0; }
+.mm-issue-cta { font-family: var(--display); font-size: 1.5rem; color: var(--c); }
+.mm-issue:hover .mm-issue-title { color: var(--c); }
+.mm-issue:hover { background: color-mix(in srgb, var(--c) 8%, transparent); }
+
+.mm-foot--wide { max-width: var(--mm-wide); margin: 12px auto 0; padding-left: 28px; padding-right: 28px; }
+
+@media (max-width: 700px) {
+    .mm-prevnext { grid-template-columns: 1fr; }
+    .mm-pn { border-right: none; border-bottom: 3px solid var(--rule); }
+    .mm-issue { grid-template-columns: auto 1fr; gap: 6px 16px; }
+    .mm-issue-date { grid-column: 2; }
+    .mm-issue-cta { display: none; }
+    .mm-cover .mm-disc--sm { left: -16px; top: -16px; width: 64px; height: 64px; }
+}
