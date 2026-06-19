@@ -310,7 +310,7 @@ body.mm { overflow-x: hidden; }
 }
 
 /* --- Slim nameplate for reading pages (post + archive) --- */
-.mm-topbar { max-width: var(--width); margin: 0 auto; padding: 0 1.5rem; }
+.mm-topbar { max-width: var(--mm-wide); margin: 0 auto; padding: 0 28px; }
 .mm-plate--slim {
     grid-template-columns: auto 1fr auto; align-items: center; gap: 16px;
     padding: 16px 0; border-bottom: 3px solid var(--rule);
@@ -325,8 +325,78 @@ body.mm { overflow-x: hidden; }
    MAD MEN — reading pages (post + archive)
    ============================================================ */
 
-.mm-post { max-width: 860px; margin: 0 auto; padding: 0 28px; }
+.mm-post { max-width: var(--mm-wide); margin: 0 auto; padding: 0 28px; }
 .mm-post-head { padding: 40px 0 26px; }
+
+/* article body — full landing width, single justified column (restored + widened) */
+.post-body.mm-read {
+    max-width: none;
+    font-size: 1.18rem;
+    line-height: 1.75;
+    text-align: justify;
+    hyphens: auto;
+}
+.post-body.mm-read > p { margin: 0 0 1.4rem; }
+.post-body.mm-read > p:first-of-type::first-letter {
+    font-family: var(--display);
+    float: left;
+    font-size: 5em;
+    line-height: 0.72;
+    font-weight: 800;
+    color: var(--oxblood);
+    margin: 0.04em 0.14em 0 0;
+    text-transform: uppercase;
+}
+.post-body.mm-read h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    margin: 2.8rem 0 1rem;
+    padding-top: 1rem;
+    border-top: 3px solid var(--rule);
+    text-align: left;
+}
+.post-body.mm-read h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    margin: 2rem 0 0.6rem;
+    text-align: left;
+}
+.post-body.mm-read a { color: var(--oxblood); border-bottom: 1px solid var(--oxblood); }
+.post-body.mm-read blockquote {
+    border: none;
+    margin: 2.8rem auto;
+    padding: 0;
+    max-width: 28ch;
+    text-align: center;
+    font-family: var(--display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1.6rem, 3vw, 2.6rem);
+    line-height: 1.05;
+    color: var(--oxblood);
+    text-align-last: center;
+}
+.post-body.mm-read blockquote p { margin: 0; }
+.post-body.mm-read ul, .post-body.mm-read ol { margin: 0 0 1.4rem; padding-left: 1.4rem; text-align: left; }
+.post-body.mm-read li { margin: 0 0 0.5rem; }
+.post-body.mm-read figure { margin: 2rem 0; }
+.post-body.mm-read figure img { width: 100%; border: 2px solid var(--rule); }
+.post-body.mm-read figcaption {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    text-align: left;
+}
+.post-body.mm-read sup a { border-bottom: none; }
 .mm-post-title {
     font-family: var(--display); font-weight: 800; text-transform: uppercase;
     line-height: 0.9; letter-spacing: -0.01em; margin: 8px 0 0;
