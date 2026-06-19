@@ -1,0 +1,30 @@
+pages.py
+  s_f328319f4b4100::t_edffafc3e9a40b 145-240
+tests/test_pages.py
+  s_b9e117683635ea::t_0106f007a385a2 46-47
+  s_b9e117683635ea::t_fa6727c76f75e8 48-54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "29cf28ef77a6c9297fea036ca31f8d600ee79ea7",
+  "prompts": {},
+  "sessions": {
+    "s_b9e117683635ea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ee100-8bf7-7ce3-8e01-a8ae5700b873",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    },
+    "s_f328319f4b4100": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ee100-0af8-75e3-84aa-b3f1f75bcdf0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
