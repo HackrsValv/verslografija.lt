@@ -1,0 +1,21 @@
+build.py
+  s_b9e117683635ea::t_868ebe22e8e535 2,4-5,9-10,13,18-20,22,29,34,38-45,48-52,54-56,58-61,63-72,74-76,80,82,90-92,94,96-100
+tests/test_build.py
+  s_b9e117683635ea::t_4a98e5830e7b73 1-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "0dc272a42bb3e72fa9c5bc103fc532cd206cb68d",
+  "prompts": {},
+  "sessions": {
+    "s_b9e117683635ea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ee100-8bf7-7ce3-8e01-a8ae5700b873",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
