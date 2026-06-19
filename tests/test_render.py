@@ -37,3 +37,16 @@ def test_sanitize_unwraps_unknown_tags_and_drops_attrs():
     assert "<div" not in clean and "<script" not in clean
     assert "onclick" not in clean and "style=" not in clean
     assert 'id="ok"' in clean and ">hi<" in clean
+
+
+def test_fancy_marked_but_markdown_body_still_renders():
+    # Regression: some Buttondown posts carry the "fancy" marker but contain
+    # plain markdown. They must still be rendered to HTML, not passed through raw.
+    body = ("<!-- buttondown-editor-mode: fancy -->\n"
+            "![cover](https://assets.buttondown.email/images/x.png)\n\n"
+            "## Skyrius\n\nTekstas su **bold**.")
+    html = render.article(body)
+    assert "## Skyrius" not in html          # heading rendered, not raw
+    assert "<h2>" in html and "Skyrius" in html
+    assert "![cover]" not in html            # cover image stripped, not raw
+    assert "<strong>bold</strong>" in html
