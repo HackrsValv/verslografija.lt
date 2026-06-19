@@ -47,6 +47,7 @@ def _head(title, description, canonical, image):
 
 def _masthead():
     return """    <div class="mm-topbar">
+        <div class="mm-meta"><span>Verslo Grafija · biuletenis</span><span>Vilnius · Est. MMXXIV</span></div>
         <header class="mm-plate mm-plate--slim">
             <a href="/" class="mm-mark mm-mark--sm" aria-label="Verslo Grafija">V</a>
             <a href="/" class="mm-wordmark mm-wordmark--sm">Verslo <span>Grafija</span></a>
