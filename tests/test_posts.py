@@ -1,4 +1,4 @@
-from posts import prepare_posts, SITE_URL
+from posts import prepare_posts, find_dropped_published, SITE_URL
 
 
 def test_prepare_posts_maps_fields_and_builds_url(sample_emails):
@@ -29,3 +29,19 @@ def test_prepare_posts_keeps_sent_and_imported_drops_drafts():
     ]
     posts = prepare_posts(emails)
     assert [p["slug"] for p in posts] == ["a", "b"]  # draft dropped, order kept
+
+
+def test_find_dropped_published_flags_slugless_published():
+    emails = [
+        {"slug": "a", "status": "sent"},
+        {"slug": "b", "status": "imported"},
+        {"slug": "", "status": "sent", "id": "x"},        # published but no slug -> dropped
+        {"slug": "", "status": "draft", "id": "d"},        # draft, not counted
+    ]
+    dropped = find_dropped_published(emails)
+    assert dropped == [("x", "sent")]
+
+
+def test_find_dropped_published_clean_when_all_have_slugs():
+    emails = [{"slug": "a", "status": "sent"}, {"slug": "b", "status": "imported"}]
+    assert find_dropped_published(emails) == []

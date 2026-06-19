@@ -49,3 +49,16 @@ def prepare_posts(emails):
             }
         )
     return posts
+
+
+def find_dropped_published(emails):
+    """Published emails (sent/imported) that won't become a page (missing slug).
+
+    Build-time guard: if non-empty, the site post count would silently undershoot
+    Buttondown's published count. Returns a list of (id, status) for the offenders.
+    """
+    return [
+        (e.get("id"), e.get("status"))
+        for e in emails
+        if e.get("status") in PUBLISHED_STATUSES and not (e.get("slug") or "").strip()
+    ]
