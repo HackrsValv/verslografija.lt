@@ -57,3 +57,13 @@ def test_md_leak_guard_flags_unrendered_markdown():
     assert render.md_leaked("![x](y.png)") is True
     assert render.md_leaked("## Heading") is True
     assert render.md_leaked("<h2>Heading</h2><p>clean</p>") is False
+
+
+def test_cover_duplicate_removed_from_body_including_email_html():
+    cover = "https://assets.buttondown.email/images/abc123.jpg"
+    # email-table HTML (imported style): cover wrapped, not the leading node
+    body = ('<!-- buttondown-editor-mode: fancy --><tr id="content-blocks">'
+            f'<img alt="t" border="0" src="{cover}" width="660"/><p>Tekstas.</p>')
+    out = render.article(body, cover)
+    assert "abc123.jpg" not in out      # cover not duplicated in body
+    assert "Tekstas." in out
