@@ -43,3 +43,12 @@ def test_archive_index_lists_all_posts_lt():
     assert 'href="/archive/a/"' in html and 'href="/archive/b/"' in html
     assert "Aaa" in html and "Bbb" in html
     assert "Aaa" in html and "Bbb" in html
+
+
+def test_landing_links_are_local():
+    posts = [_post(slug=f"p{i}", title=f"T{i}") for i in range(4)]
+    html = pages.landing(posts)
+    assert "visa.verslografija.lt" not in html
+    assert 'href="/archive/p0/"' in html      # featured
+    assert 'href="/archive/"' in html          # nav + footer archive
+    assert html.count("<h1") == 1
