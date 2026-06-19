@@ -48,7 +48,7 @@ def _head(title, description, canonical, image):
 
 def _masthead():
     return """    <div class="mm-topbar">
-        <div class="mm-meta"><span>Verslo Grafija · biuletenis</span><span>Internetai · Est. MMXXIV</span></div>
+        <div class="mm-meta"><span>Verslo Grafija · biuletenis</span><span>Visur · Est. MMXXIV</span></div>
         <header class="mm-plate mm-plate--slim">
             <a href="/" class="mm-mark mm-mark--sm" aria-label="Verslo Grafija"><span class="v">V</span><span class="g">G</span></a>
             <a href="/" class="mm-wordmark mm-wordmark--sm">Verslo <span>Grafija</span></a>
@@ -222,9 +222,9 @@ def landing(posts):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="XuC0uXgnDy6USPp0RSUBgz-R0EzUSiqGz8wp0O0v4fY">
     <title>Verslo Grafija</title>
-    <meta name="description" content="Stato tvorą atviroje pievoje. Optimizuoja procesą, kuris neturėjo egzistuoti. Cituoja eksperimentą, kurio nebuvo.">
+    <meta name="description" content="Apie mus, kurie tveria tvorą atviroje pievoje, optimizuoja procesą, kuris neturėjo egzistuoti, cituoja eksperimentą, kurio nebuvo.">
     <meta property="og:title" content="Verslo Grafija">
-    <meta property="og:description" content="Stato tvorą atviroje pievoje. Optimizuoja procesą, kuris neturėjo egzistuoti. Cituoja eksperimentą, kurio nebuvo.">
+    <meta property="og:description" content="Apie mus, kurie tveria tvorą atviroje pievoje, optimizuoja procesą, kuris neturėjo egzistuoti, cituoja eksperimentą, kurio nebuvo.">
     {img_meta}
     <meta property="og:type" content="website">
     <meta property="og:locale" content="lt_LT">
@@ -236,7 +236,7 @@ def landing(posts):
 </head>
 <body class="mm">
     <div class="wrap">
-        <div class="mm-meta"><span>№ 01 — Verslo Grafija</span><span>Internetai · Est. MMXXIV</span></div>
+        <div class="mm-meta"><span>№ 01 — Verslo Grafija</span><span>Visur · Est. MMXXIV</span></div>
         <header class="mm-plate">
             <a href="/" class="mm-mark" aria-label="Verslo Grafija"><span class="v">V</span><span class="g">G</span></a>
             <h1 class="mm-wordmark">Verslo <span>Grafija</span></h1>
@@ -251,7 +251,7 @@ def landing(posts):
             <div class="mm-hero-idea">
                 <p class="mm-kicker">Biuletenis apie darbą</p>
                 <h2 class="mm-hero-line">Visi kažką <em>žiūrim</em>.<br>O kartais ir <span class="knock">parašom</span>.</h2>
-                <p class="mm-hero-sub">Stato tvorą atviroje pievoje. Optimizuoja procesą, kuris neturėjo egzistuoti. Cituoja eksperimentą, kurio nebuvo.</p>
+                <p class="mm-hero-sub">Apie mus, kurie tveria tvorą atviroje pievoje, optimizuoja procesą, kuris neturėjo egzistuoti, cituoja eksperimentą, kurio nebuvo.</p>
             </div>
             {hero_fig}
         </section>
