@@ -6,13 +6,18 @@ import urllib.request
 API_BASE = "https://api.buttondown.email/v1/emails"
 SITE_URL = "https://verslografija.lt"
 
+# Statuses that are publicly published in the archive. "sent" = emailed posts,
+# "imported" = posts migrated into Buttondown (the newsletter's early issues).
+# Drafts/scheduled are excluded.
+PUBLISHED_STATUSES = frozenset({"sent", "imported"})
+
 
 def fetch_emails(api_key):
-    """All sent emails, newest first (follows pagination)."""
+    """All emails, newest first (follows pagination). prepare_posts filters status."""
     emails = []
     page = 1
     while True:
-        url = f"{API_BASE}?page={page}&status=sent&ordering=-publish_date"
+        url = f"{API_BASE}?page={page}&ordering=-publish_date"
         req = urllib.request.Request(url, headers={"Authorization": f"Token {api_key}"})
         with urllib.request.urlopen(req) as resp:
             data = json.load(resp)
@@ -24,9 +29,11 @@ def fetch_emails(api_key):
 
 
 def prepare_posts(emails):
-    """Normalize raw email objects into post dicts. No cap; skips slugless."""
+    """Normalize published email objects into post dicts. No cap; skips slugless and non-published."""
     posts = []
     for e in emails:
+        if e.get("status") not in PUBLISHED_STATUSES:
+            continue
         slug = (e.get("slug") or "").strip()
         if not slug:
             continue
