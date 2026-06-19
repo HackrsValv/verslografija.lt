@@ -7,6 +7,19 @@ import render
 SITE_URL = "https://verslografija.lt"
 
 
+def _kinetic(text):
+    """Wrap each letter in an indexed span for the ink-stamp masthead reveal."""
+    spans = []
+    i = 0
+    for ch in text:
+        if ch == " ":
+            spans.append('<span class="ksp"> </span>')
+        else:
+            spans.append(f'<span style="--k:{i}">{escape(ch)}</span>')
+            i += 1
+    return "".join(spans)
+
+
 def _head(title, description, canonical, image):
     img_meta = ""
     if image:
@@ -146,20 +159,22 @@ def archive_index(posts):
 </html>"""
 
 
-def _land_card(post):
+_COL_HUES = ("oxblood", "teal", "orange")
+
+
+def _mm_col(post, n, hue):
     cover = (
-        f'<div class="card-image" style="view-transition-name:cover-{post["slug"]}"><img src="{post["image"]}" '
+        f'<div class="mm-tone" style="view-transition-name:cover-{post["slug"]}"><img src="{post["image"]}" '
         f'alt="{escape(post["title"])} — iliustracija" loading="lazy" decoding="async"></div>'
         if post["image"]
-        else '<div class="card-image card-image--placeholder"><span class="card-image-v">V</span></div>'
+        else '<div class="mm-tone mm-tone--ph">V</div>'
     )
-    return f"""                <a href="/archive/{post['slug']}/" class="card">
-                    {cover}
-                    <div class="card-content">
-                        <span class="card-date">{post['date']}</span>
-                        <h3 class="card-title" style="view-transition-name:title-{post['slug']}">{escape(post['title'])}</h3>
-                    </div>
-                </a>"""
+    return f"""            <a class="mm-col" style="--c:var(--{hue})" href="/archive/{post['slug']}/">
+                <span class="mm-no">{n:02d}</span>
+                {cover}
+                <span class="mm-col-date">{post['date']}</span>
+                <h3 class="mm-col-title" style="view-transition-name:title-{post['slug']}">{escape(post['title'])}</h3>
+            </a>"""
 
 
 def landing(posts):
@@ -167,19 +182,20 @@ def landing(posts):
     grid = posts[1:4]
     f_alt = f'{featured["title"]} — iliustracija'
     if featured["image"]:
-        f_img = (
-            f'<div class="featured-image" style="view-transition-name:cover-{featured["slug"]}"><img src="{featured["image"]}" '
-            f'alt="{escape(f_alt)}" loading="eager" decoding="async"></div>'
+        hero_fig = (
+            f'<a class="mm-hero-fig" href="/archive/{featured["slug"]}/" aria-label="{escape(featured["title"])}">'
+            f'<span class="mm-disc"></span>'
+            f'<span class="mm-tone" style="view-transition-name:cover-{featured["slug"]}">'
+            f'<img src="{featured["image"]}" alt="{escape(f_alt)}" loading="eager" decoding="async"></span></a>'
         )
-    else:
-        f_img = '<div class="featured-image featured-image--placeholder"><span class="card-image-v">V</span></div>'
-    cards = "\n".join(_land_card(p) for p in grid)
-    img_meta = ""
-    if featured["image"]:
         img_meta = (
             f'<meta property="og:image" content="{featured["image"]}">\n'
             f'    <meta name="twitter:image" content="{featured["image"]}">'
         )
+    else:
+        hero_fig = '<div class="mm-hero-fig"><span class="mm-tone mm-tone--ph">V</span></div>'
+        img_meta = ""
+    cols = "\n".join(_mm_col(p, i + 1, _COL_HUES[i % 3]) for i, p in enumerate(grid))
     return f"""<!DOCTYPE html>
 <html lang="lt">
 <head>
@@ -198,46 +214,64 @@ def landing(posts):
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/style.css">
 </head>
-<body>
-    <header class="masthead">
-        <div class="masthead-inner">
-            <a href="/" class="masthead-logo" aria-label="Verslo Grafija">
-                <img src="/assets/logo-verslografija.svg" alt="" width="64" height="64">
-            </a>
-            <h1 class="masthead-title">Verslo Grafija</h1>
-            <p class="masthead-tagline">Visi kažką žiūrim, o kartais ir parašom</p>
-            <nav class="masthead-nav">
+<body class="mm">
+    <div class="wrap">
+        <div class="mm-meta"><span>№ 01 — Verslo Grafija</span><span>Vilnius · Est. MMXXIV</span></div>
+        <header class="mm-plate">
+            <a href="/" class="mm-mark" aria-label="Verslo Grafija">V</a>
+            <h1 class="mm-wordmark">Verslo <span>Grafija</span></h1>
+            <nav class="mm-nav">
                 <a href="#naujausios">Naujausios</a>
                 <a href="#prenumeruoti">Prenumeruoti</a>
                 <a href="/archive/">Archyvas</a>
             </nav>
-        </div>
-    </header>
-    <main>
-        <section class="featured" id="naujausios">
-            <a href="/archive/{featured['slug']}/" class="featured-link">
-                {f_img}
-                <div class="featured-content">
-                    <span class="featured-date">{featured['date']}</span>
-                    <h2 class="featured-title" style="view-transition-name:title-{featured['slug']}">{escape(featured['title'])}</h2>
-                    <p class="featured-excerpt">{escape(featured['excerpt'])}</p>
-                    <span class="featured-cta">Skaityti &rarr;</span>
-                </div>
-            </a>
-        </section>
-        <section class="post-grid">
-            <h2 class="section-header">Šviežiausi įrašai</h2>
-            <div class="grid">
-{cards}
+        </header>
+
+        <section class="mm-hero" id="naujausios">
+            <div class="mm-hero-idea">
+                <p class="mm-kicker">Biuletenis apie darbą</p>
+                <h2 class="mm-hero-line">Visi kažką <em>žiūrim</em>.<br>O kartais ir <span class="knock">parašom</span>.</h2>
+                <p class="mm-hero-sub">Stato tvorą atviroje pievoje. Optimizuoja procesą, kuris neturėjo egzistuoti. Cituoja eksperimentą, kurio nebuvo.</p>
             </div>
+            {hero_fig}
         </section>
-{_subscribe()}
-    </main>
-    <footer class="footer">
-        <div class="footer-inner">
-            <a href="/archive/" class="footer-archive">Visas archyvas &rarr;</a>
-            <p class="footer-copy">&copy; 2024&ndash;2026 Verslo Grafija</p>
+    </div>
+
+    <section class="mm-band">
+        <a class="mm-band-inner" href="/archive/{featured['slug']}/">
+            <span class="mm-band-date">Naujausias · {featured['date']}</span>
+            <h3 class="mm-band-title" style="view-transition-name:title-{featured['slug']}">{escape(featured['title'])}</h3>
+            <span class="mm-band-cta">Skaityti &rarr;</span>
+        </a>
+    </section>
+
+    <div class="wrap">
+        <div class="mm-sechead"><h2>Šviežiausi įrašai</h2><span>Iš archyvo</span></div>
+        <div class="mm-three">
+{cols}
         </div>
-    </footer>
+    </div>
+
+    <section class="mm-coupon" id="prenumeruoti">
+        <h2>Šlamštas, kurį verta atidaryti</h2>
+        <p>Visi kažką žiūrim, o kartais ir parašom.</p>
+        <form action="https://buttondown.com/api/emails/embed-subscribe/verslografija"
+              method="post" target="popupwindow">
+            <label for="bd-email" class="sr-only">El. paštas</label>
+            <input type="email" name="email" id="bd-email" placeholder="El. paštas"
+                   autocomplete="email" inputmode="email" autocapitalize="off"
+                   autocorrect="off" spellcheck="false" maxlength="254"
+                   aria-describedby="bd-note" required>
+            <button type="submit">Prenumeruoti</button>
+        </form>
+        <p class="mm-fine" id="bd-note">Šlamštas iš vidaus · be jokių blokerių</p>
+    </section>
+
+    <div class="wrap">
+        <footer class="mm-foot">
+            <a class="mm-foot-ar" href="/archive/">Visas archyvas &rarr;</a>
+            <span>&copy; 2024&ndash;2026 Verslo Grafija</span>
+        </footer>
+    </div>
 </body>
 </html>"""
