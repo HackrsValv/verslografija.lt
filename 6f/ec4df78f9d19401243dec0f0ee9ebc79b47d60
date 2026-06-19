@@ -1,0 +1,24 @@
+pages.py
+  s_c178244b0011e6::t_1344578df28df7 103,146
+  s_c178244b0011e6::t_780665f63e3ea6 49-58,62-74
+madmen.html
+  s_c178244b0011e6::t_7dfd2c8d13d52c 1-176
+style.css
+  s_c178244b0011e6::t_16bfb5384842bc 1005,1008-1020
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "6fec4df78f9d19401243dec0f0ee9ebc79b47d60",
+  "prompts": {},
+  "sessions": {
+    "s_c178244b0011e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb62ed7f-0873-439a-8be2-d645eda6eb8f",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
