@@ -76,15 +76,17 @@ def _subscribe():
 
 
 def _prevnext(prev, nxt):
-    left = (
-        f'<a class="post-nav-prev" href="/archive/{prev["slug"]}/">&larr; {escape(prev["title"])}</a>'
-        if prev else "<span></span>"
-    )
-    right = (
-        f'<a class="post-nav-next" href="/archive/{nxt["slug"]}/">{escape(nxt["title"])} &rarr;</a>'
-        if nxt else "<span></span>"
-    )
-    return f'    <nav class="post-nav">\n        {left}\n        {right}\n    </nav>'
+    def card(p, label, hue):
+        if not p:
+            return '<span class="mm-pn mm-pn--empty"></span>'
+        return (
+            f'<a class="mm-pn" style="--c:var(--{hue})" href="/archive/{p["slug"]}/">'
+            f'<span class="mm-pn-label">{label}</span>'
+            f'<span class="mm-pn-title">{escape(p["title"])}</span></a>'
+        )
+    left = card(prev, "&larr; Ankstesnis numeris", "teal")
+    right = card(nxt, "Kitas numeris &rarr;", "oxblood")
+    return f'    <nav class="mm-prevnext">\n        {left}\n        {right}\n    </nav>'
 
 
 def post_page(post, prev, nxt):
@@ -92,8 +94,11 @@ def post_page(post, prev, nxt):
     cover = ""
     if post["image"]:
         cover = (
-            f'<div class="post-cover" style="view-transition-name:cover-{post["slug"]}"><img src="{post["image"]}" '
-            f'alt="{escape(alt)}" loading="eager" decoding="async"></div>'
+            f'<figure class="mm-cover">'
+            f'<span class="mm-disc mm-disc--sm"></span>'
+            f'<span class="mm-tone post-cover" style="view-transition-name:cover-{post["slug"]}">'
+            f'<img src="{post["image"]}" alt="{escape(alt)}" loading="eager" decoding="async"></span>'
+            f'</figure>'
         )
     body_html = render.article(post["body"])
     head = _head(post["title"], post["excerpt"], post["url"], post["image"])
@@ -103,22 +108,22 @@ def post_page(post, prev, nxt):
 <body class="mm">
 {_masthead()}
     <main>
-        <article class="post">
-            <span class="post-date">{post["date"]}</span>
-            <h1 class="post-title" style="view-transition-name:title-{post["slug"]}">{escape(post["title"])}</h1>
+        <article class="mm-post">
+            <header class="mm-post-head">
+                <p class="mm-kicker">Numeris · {post["date"]}</p>
+                <h1 class="mm-post-title" style="view-transition-name:title-{post["slug"]}">{escape(post["title"])}</h1>
+            </header>
             {cover}
-            <div class="post-body">
+            <div class="post-body mm-read">
 {body_html}
             </div>
         </article>
 {_prevnext(prev, nxt)}
 {_subscribe()}
     </main>
-    <footer class="footer">
-        <div class="footer-inner">
-            <a href="/archive/" class="footer-archive">Visas archyvas &rarr;</a>
-            <p class="footer-copy">&copy; 2024&ndash;2026 Verslo Grafija</p>
-        </div>
+    <footer class="mm-foot mm-foot--wide">
+        <a class="mm-foot-ar" href="/archive/">Visas archyvas &rarr;</a>
+        <span>&copy; 2024&ndash;2026 Verslo Grafija</span>
     </footer>
 </body>
 </html>"""
@@ -126,13 +131,19 @@ def post_page(post, prev, nxt):
 
 
 
+_ISSUE_HUES = ("oxblood", "teal", "orange", "sky")
+
+
 def archive_index(posts):
+    total = len(posts)
     rows = "\n".join(
-        f"""        <a class="archive-row" href="/archive/{p['slug']}/">
-            <span class="archive-date">{p['date']}</span>
-            <span class="archive-title">{escape(p['title'])}</span>
-        </a>"""
-        for p in posts
+        f"""            <a class="mm-issue" style="--c:var(--{_ISSUE_HUES[i % 4]})" href="/archive/{p['slug']}/">
+                <span class="mm-issue-no">{total - i:02d}</span>
+                <span class="mm-issue-date">{p['date']}</span>
+                <h2 class="mm-issue-title">{escape(p['title'])}</h2>
+                <span class="mm-issue-cta">&rarr;</span>
+            </a>"""
+        for i, p in enumerate(posts)
     )
     head = _head(
         "Archyvas — Verslo Grafija",
@@ -146,17 +157,20 @@ def archive_index(posts):
 <body class="mm">
 {_masthead()}
     <main>
-        <section class="archive">
-            <h1 class="archive-heading">Archyvas</h1>
+        <div class="wrap">
+            <header class="mm-arch-head">
+                <h1>Archyvas</h1>
+                <span>{total} numeriai · visi iš vidaus</span>
+            </header>
+            <div class="mm-issues">
 {rows}
-        </section>
+            </div>
+        </div>
 {_subscribe()}
     </main>
-    <footer class="footer">
-        <div class="footer-inner">
-            <a href="/" class="footer-archive">&larr; Pradžia</a>
-            <p class="footer-copy">&copy; 2024&ndash;2026 Verslo Grafija</p>
-        </div>
+    <footer class="mm-foot mm-foot--wide">
+        <a class="mm-foot-ar" href="/">&larr; Pradžia</a>
+        <span>&copy; 2024&ndash;2026 Verslo Grafija</span>
     </footer>
 </body>
 </html>"""
