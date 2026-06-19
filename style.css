@@ -399,7 +399,20 @@ body.mm { overflow-x: hidden; }
     margin-top: 0.5rem;
     text-align: left;
 }
-.post-body.mm-read sup a { border-bottom: none; }
+.post-body.mm-read sup a { border-bottom: none; color: var(--oxblood); font-weight: 700; }
+/* footnotes (mistune wraps them in <section>) */
+.post-body.mm-read section {
+    margin-top: 3rem;
+    padding-top: 1.2rem;
+    border-top: 3px solid var(--rule);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--muted);
+    text-align: left;
+}
+.post-body.mm-read section ol { padding-left: 1.4rem; }
+.post-body.mm-read section li { margin: 0 0 0.6rem; }
+.post-body.mm-read section a { border-bottom: none; }
 .mm-post-title {
     font-family: var(--display); font-weight: 800; text-transform: uppercase;
     line-height: 0.9; letter-spacing: -0.01em; margin: 8px 0 0;

@@ -67,3 +67,14 @@ def test_cover_duplicate_removed_from_body_including_email_html():
     out = render.article(body, cover)
     assert "abc123.jpg" not in out      # cover not duplicated in body
     assert "Tekstas." in out
+
+
+def test_footnotes_rendered_not_raw():
+    body = ("Tekstas su išnaša.[^1]\n\n"
+            "## Skyrius\n\nDar tekstas.[^2]\n\n"
+            "[^1]: Pirmas šaltinis.\n[^2]: Antras šaltinis.")
+    out = render.article(body)
+    assert "[^1]" not in out and "[^1]:" not in out   # not raw
+    assert "<sup" in out                                # inline ref rendered
+    assert "Pirmas šaltinis." in out                    # definition present
+    assert 'href="#fn' in out or 'id="fn' in out        # anchor wiring
