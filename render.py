@@ -22,10 +22,13 @@ _md = mistune.create_markdown(escape=False)
 
 
 def to_html(body):
-    """Strip the editor-mode directive; markdown->HTML for plain, pass-through for fancy."""
+    """Strip the editor-mode directive, then render.
+
+    Always run mistune: it renders markdown to HTML and passes raw HTML blocks
+    through unchanged. The Buttondown "fancy" marker is unreliable — some
+    fancy-marked posts contain plain markdown — so we no longer branch on it.
+    """
     stripped = _EDITOR_MODE.sub("", body).strip()
-    if "buttondown-editor-mode: fancy" in body:
-        return stripped
     return _md(stripped)
 
 
