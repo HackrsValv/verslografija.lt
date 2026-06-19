@@ -33,3 +33,13 @@ def test_post_page_prevnext_links():
     html = pages.post_page(_post(), prev=older, nxt=newer)
     assert 'href="/archive/senas/"' in html
     assert 'href="/archive/naujas/"' in html
+
+
+def test_archive_index_lists_all_posts_lt():
+    posts = [_post(slug="a", title="Aaa"), _post(slug="b", title="Bbb")]
+    html = pages.archive_index(posts)
+    assert '<html lang="lt">' in html
+    assert html.count("<h1") == 1  # page heading only
+    assert 'href="/archive/a/"' in html and 'href="/archive/b/"' in html
+    assert "Aaa" in html and "Bbb" in html
+    assert "Aaa" in html and "Bbb" in html

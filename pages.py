@@ -106,3 +106,39 @@ def post_page(post, prev, nxt):
     </footer>
 </body>
 </html>"""
+
+
+def archive_index(posts):
+    rows = "\n".join(
+        f"""        <a class="archive-row" href="/archive/{p['slug']}/">
+            <span class="archive-date">{p['date']}</span>
+            <span class="archive-title">{escape(p['title'])}</span>
+        </a>"""
+        for p in posts
+    )
+    head = _head(
+        "Archyvas — Verslo Grafija",
+        "Visi Verslo Grafijos įrašai.",
+        f"{SITE_URL}/archive/",
+        "",
+    )
+    return f"""<!DOCTYPE html>
+<html lang="lt">
+{head}
+<body>
+{_masthead()}
+    <main>
+        <section class="archive">
+            <h1 class="archive-heading">Archyvas</h1>
+{rows}
+        </section>
+{_subscribe()}
+    </main>
+    <footer class="footer">
+        <div class="footer-inner">
+            <a href="/" class="footer-archive">&larr; Pradžia</a>
+            <p class="footer-copy">&copy; 2024&ndash;2026 Verslo Grafija</p>
+        </div>
+    </footer>
+</body>
+</html>"""
