@@ -73,7 +73,7 @@ def _subscribe():
                    aria-describedby="bd-note" required>
             <button type="submit">Prenumeruoti</button>
         </form>
-        <p class="mm-fine" id="bd-note">Šlamštas iš vidaus · be jokių blokerių</p>
+        <p class="mm-fine" id="bd-note">Šlamštas iš vidaus, nestabdant.</p>
     </section>"""
 
 
@@ -284,7 +284,7 @@ def landing(posts):
                    aria-describedby="bd-note" required>
             <button type="submit">Prenumeruoti</button>
         </form>
-        <p class="mm-fine" id="bd-note">Šlamštas iš vidaus · be jokių blokerių</p>
+        <p class="mm-fine" id="bd-note">Šlamštas iš vidaus, nestabdant.</p>
     </section>
 
     <div class="wrap">
