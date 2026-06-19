@@ -40,6 +40,7 @@ def _head(title, description, canonical, image):
     <meta property="og:url" content="{canonical}">
     {img_meta}
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="/assets/vg-mark.svg">
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/style.css">
 </head>"""
@@ -47,9 +48,9 @@ def _head(title, description, canonical, image):
 
 def _masthead():
     return """    <div class="mm-topbar">
-        <div class="mm-meta"><span>Verslo Grafija · biuletenis</span><span>Vilnius · Est. MMXXIV</span></div>
+        <div class="mm-meta"><span>Verslo Grafija · biuletenis</span><span>Internetai · Est. MMXXIV</span></div>
         <header class="mm-plate mm-plate--slim">
-            <a href="/" class="mm-mark mm-mark--sm" aria-label="Verslo Grafija">V</a>
+            <a href="/" class="mm-mark mm-mark--sm" aria-label="Verslo Grafija"><span class="v">V</span><span class="g">G</span></a>
             <a href="/" class="mm-wordmark mm-wordmark--sm">Verslo <span>Grafija</span></a>
             <nav class="mm-nav mm-nav--row">
                 <a href="/">Pradžia</a>
@@ -229,14 +230,15 @@ def landing(posts):
     <meta property="og:locale" content="lt_LT">
     <meta property="og:url" content="https://verslografija.lt">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="/assets/vg-mark.svg">
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/style.css">
 </head>
 <body class="mm">
     <div class="wrap">
-        <div class="mm-meta"><span>№ 01 — Verslo Grafija</span><span>Vilnius · Est. MMXXIV</span></div>
+        <div class="mm-meta"><span>№ 01 — Verslo Grafija</span><span>Internetai · Est. MMXXIV</span></div>
         <header class="mm-plate">
-            <a href="/" class="mm-mark" aria-label="Verslo Grafija">V</a>
+            <a href="/" class="mm-mark" aria-label="Verslo Grafija"><span class="v">V</span><span class="g">G</span></a>
             <h1 class="mm-wordmark">Verslo <span>Grafija</span></h1>
             <nav class="mm-nav">
                 <a href="#naujausios">Naujausios</a>
