@@ -1,0 +1,26 @@
+style.css
+  s_c178244b0011e6::t_1f64b4ae4b8b5f 312
+  s_c178244b0011e6::t_bf34195c01f952 321
+  s_c178244b0011e6::t_595b3fd82db1ee 209,211-212,214-215,221-222
+pages.py
+  s_c178244b0011e6::t_99033c3800f047 43,233
+  s_c178244b0011e6::t_2f8bb7a2d21349 53,241
+assets/vg-mark.svg
+  s_c178244b0011e6::t_410fad53cc7b74 1-6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "18169979da4d54f77735183f695d74c5034fc530",
+  "prompts": {},
+  "sessions": {
+    "s_c178244b0011e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb62ed7f-0873-439a-8be2-d645eda6eb8f",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
