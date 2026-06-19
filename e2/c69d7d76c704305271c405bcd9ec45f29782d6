@@ -1,0 +1,19 @@
+posts.py
+  s_c178244b0011e6::t_8a4cd316fc44cf 9-13,16,20,32,35-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "e2c69d7d76c704305271c405bcd9ec45f29782d6",
+  "prompts": {},
+  "sessions": {
+    "s_c178244b0011e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb62ed7f-0873-439a-8be2-d645eda6eb8f",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
