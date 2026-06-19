@@ -1,0 +1,19 @@
+docs/superpowers/plans/2026-06-19-self-hosted-archive-reader.md
+  s_c178244b0011e6::t_9a845ecf4b84c7 1-1341
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "22eeb1039732b2f4e151799ce9ff6566b25097fb",
+  "prompts": {},
+  "sessions": {
+    "s_c178244b0011e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb62ed7f-0873-439a-8be2-d645eda6eb8f",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
