@@ -185,6 +185,7 @@ def landing(posts):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="XuC0uXgnDy6USPp0RSUBgz-R0EzUSiqGz8wp0O0v4fY">
     <title>Verslo Grafija</title>
     <meta name="description" content="Stato tvorą atviroje pievoje. Optimizuoja procesą, kuris neturėjo egzistuoti. Cituoja eksperimentą, kurio nebuvo.">
     <meta property="og:title" content="Verslo Grafija">
