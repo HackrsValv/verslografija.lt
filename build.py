@@ -89,7 +89,17 @@ def main():
     print("Fetching posts from Buttondown API...")
     emails = posts.fetch_emails(api_key)
     prepared = posts.prepare_posts(emails)
-    print(f"  {len(prepared)} posts")
+
+    # Guard: every published post (sent/imported) must become a page, so the
+    # site count can't silently drift from Buttondown's published count.
+    dropped = posts.find_dropped_published(emails)
+    if dropped:
+        raise ValueError(f"published posts dropped (missing slug): {dropped}")
+
+    published = sum(1 for e in emails if e.get("status") in posts.PUBLISHED_STATUSES)
+    print(f"  {len(prepared)} posts (Buttondown published: {published})")
+    if len(prepared) != published:
+        raise ValueError(f"post count {len(prepared)} != Buttondown published {published}")
 
     out = SITE_DIR
     if args.dry_run:
