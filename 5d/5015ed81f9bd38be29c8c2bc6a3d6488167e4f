@@ -1,0 +1,19 @@
+docs/superpowers/specs/2026-06-19-self-hosted-archive-reader-design.md
+  s_c178244b0011e6::t_9ff0ad8741ada3 1-126
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "5d5015ed81f9bd38be29c8c2bc6a3d6488167e4f",
+  "prompts": {},
+  "sessions": {
+    "s_c178244b0011e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb62ed7f-0873-439a-8be2-d645eda6eb8f",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
