@@ -1,0 +1,20 @@
+render.py
+  s_c178244b0011e6::t_0d65c72e8fb7e4 88-92,94-98,104-107
+  s_c178244b0011e6::t_c37ac3a2cce2a1 13-15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "334239b45634ee751e74ec7dad4e181102f81d38",
+  "prompts": {},
+  "sessions": {
+    "s_c178244b0011e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb62ed7f-0873-439a-8be2-d645eda6eb8f",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
