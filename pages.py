@@ -101,7 +101,7 @@ def post_page(post, prev, nxt):
             f'<img src="{post["image"]}" alt="{escape(alt)}" loading="eager" decoding="async"></span>'
             f'</figure>'
         )
-    body_html = render.article(post["body"])
+    body_html = render.article(post["body"], post["image"])
     head = _head(post["title"], post["excerpt"], post["url"], post["image"])
     return f"""<!DOCTYPE html>
 <html lang="lt">

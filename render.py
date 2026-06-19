@@ -81,6 +81,27 @@ def _strip_leading_cover(html):
     return _LEADING_IMG.sub("", html, count=1).lstrip()
 
 
+def _strip_cover(html, cover):
+    """Remove the body's duplicate of the cover image.
+
+    The template renders the cover separately, so the same image at the top of
+    the body is a duplicate. Imported (email-HTML) posts wrap it in table markup,
+    so it isn't always the leading node — match the cover URL anywhere and drop
+    the first occurrence (plus any wrapper left empty).
+    """
+    if not cover:
+        return _strip_leading_cover(html)
+    name = re.escape(cover.rsplit("/", 1)[-1])
+    img = re.compile(r"<img\b[^>]*" + name + r"[^>]*>", re.IGNORECASE)
+    new = img.sub("", html, count=1)
+    if new == html:
+        return _strip_leading_cover(html)
+    # tidy wrappers left empty by the removal
+    new = re.sub(r"<p>\s*</p>", "", new, count=1)
+    new = re.sub(r"<figure>\s*(?:<figcaption\b[^>]*>.*?</figcaption>\s*)?</figure>", "", new, count=1, flags=re.S)
+    return new.strip()
+
+
 def _lazy_images(html):
     return _IMG_OPEN.sub('<img loading="lazy" decoding="async"', html)
 
@@ -90,15 +111,17 @@ def md_leaked(html):
     return bool(_MD_IMAGE.search(html) or _MD_HEADING.search(html))
 
 
-def article(body):
-    """Full pipeline -> clean article HTML (no leading cover, no h1).
+def article(body, cover=""):
+    """Full pipeline -> clean article HTML (no duplicate cover, no h1).
 
-    Raises ValueError if markdown leaked into the output (a render regression).
-    Run at build time, this fails CI before a broken post can deploy.
+    `cover` is the post's cover image URL; its duplicate at the top of the body
+    is removed. Sanitize first so email-table wrappers are unwrapped before the
+    cover strip. Raises ValueError if markdown leaked (a render regression);
+    run at build time this fails CI before a broken post can deploy.
     """
     html = to_html(body)
-    html = _strip_leading_cover(html)
     html = sanitize(html)
+    html = _strip_cover(html, cover)
     html = _lazy_images(html)
     html = _VISA_LINK.sub(r"/archive/\1/", html)
     html = html.strip()
