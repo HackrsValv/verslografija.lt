@@ -13,15 +13,17 @@ _IMG_OPEN = re.compile(r"<img\b", re.IGNORECASE)
 # Signatures of markdown that failed to render (build-time guard).
 _MD_IMAGE = re.compile(r"!\[[^\]]*\]\([^)]*\)")
 _MD_HEADING = re.compile(r"^#{1,6}\s", re.MULTILINE)
+_MD_FOOTNOTE = re.compile(r"\[\^[^\]]+\]")
 
 ALLOWED_TAGS = {
     "a", "p", "h2", "h3", "h4", "blockquote", "em", "strong",
     "ul", "ol", "li", "figure", "figcaption", "img", "sup", "hr", "code", "pre", "br",
+    "section",
 }
 ALLOWED_ATTRS = {"href", "src", "alt", "id"}
 VOID_TAGS = {"img", "hr", "br"}
 
-_md = mistune.create_markdown(escape=False)
+_md = mistune.create_markdown(escape=False, plugins=["footnotes"])
 
 
 def to_html(body):
@@ -107,8 +109,8 @@ def _lazy_images(html):
 
 
 def md_leaked(html):
-    """True if rendered output still contains unrendered markdown (image or heading)."""
-    return bool(_MD_IMAGE.search(html) or _MD_HEADING.search(html))
+    """True if rendered output still contains unrendered markdown (image, heading, footnote)."""
+    return bool(_MD_IMAGE.search(html) or _MD_HEADING.search(html) or _MD_FOOTNOTE.search(html))
 
 
 def article(body, cover=""):
