@@ -1,0 +1,25 @@
+tests/conftest.py
+  s_f328319f4b4100::t_b32622eb76f26d 1-21
+requirements.txt
+  s_f328319f4b4100::t_b32622eb76f26d 1-2
+tests/__init__.py
+  s_f328319f4b4100::t_b32622eb76f26d 1
+tests/fixtures/emails_sample.json
+  s_f328319f4b4100::t_b32622eb76f26d 1-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "befa7ffcfa79a218ede4fa42803e4fc85587c03e",
+  "prompts": {},
+  "sessions": {
+    "s_f328319f4b4100": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ee100-0af8-75e3-84aa-b3f1f75bcdf0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
