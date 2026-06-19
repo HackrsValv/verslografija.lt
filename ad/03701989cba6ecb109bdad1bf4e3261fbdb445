@@ -1,0 +1,19 @@
+.github/workflows/build-landing.yml
+  s_b9e117683635ea::t_034f982c71ef55 6,21-27,35-36,43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "ad03701989cba6ecb109bdad1bf4e3261fbdb445",
+  "prompts": {},
+  "sessions": {
+    "s_b9e117683635ea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ee100-8bf7-7ce3-8e01-a8ae5700b873",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
