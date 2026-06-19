@@ -10,6 +10,9 @@ _VISA_LINK = re.compile(r"https://visa\.verslografija\.lt/archive/([^/\"')\s]+)/
 _LEADING_FIGURE = re.compile(r"^\s*<figure\b[^>]*>.*?</figure>", re.IGNORECASE | re.DOTALL)
 _LEADING_IMG = re.compile(r"^\s*(?:<p\b[^>]*>\s*)?<img\b[^>]*>(?:\s*</p>)?", re.IGNORECASE)
 _IMG_OPEN = re.compile(r"<img\b", re.IGNORECASE)
+# Signatures of markdown that failed to render (build-time guard).
+_MD_IMAGE = re.compile(r"!\[[^\]]*\]\([^)]*\)")
+_MD_HEADING = re.compile(r"^#{1,6}\s", re.MULTILINE)
 
 ALLOWED_TAGS = {
     "a", "p", "h2", "h3", "h4", "blockquote", "em", "strong",
@@ -82,11 +85,23 @@ def _lazy_images(html):
     return _IMG_OPEN.sub('<img loading="lazy" decoding="async"', html)
 
 
+def md_leaked(html):
+    """True if rendered output still contains unrendered markdown (image or heading)."""
+    return bool(_MD_IMAGE.search(html) or _MD_HEADING.search(html))
+
+
 def article(body):
-    """Full pipeline -> clean article HTML (no leading cover, no h1)."""
+    """Full pipeline -> clean article HTML (no leading cover, no h1).
+
+    Raises ValueError if markdown leaked into the output (a render regression).
+    Run at build time, this fails CI before a broken post can deploy.
+    """
     html = to_html(body)
     html = _strip_leading_cover(html)
     html = sanitize(html)
     html = _lazy_images(html)
     html = _VISA_LINK.sub(r"/archive/\1/", html)
-    return html.strip()
+    html = html.strip()
+    if md_leaked(html):
+        raise ValueError("unrendered markdown leaked into article output")
+    return html

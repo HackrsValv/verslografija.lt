@@ -50,3 +50,10 @@ def test_fancy_marked_but_markdown_body_still_renders():
     assert "<h2>" in html and "Skyrius" in html
     assert "![cover]" not in html            # cover image stripped, not raw
     assert "<strong>bold</strong>" in html
+
+
+def test_md_leak_guard_flags_unrendered_markdown():
+    # Build-time guard: catches any future render regression on real content.
+    assert render.md_leaked("![x](y.png)") is True
+    assert render.md_leaked("## Heading") is True
+    assert render.md_leaked("<h2>Heading</h2><p>clean</p>") is False
