@@ -1,0 +1,19 @@
+build.py
+  s_e6468766a9f83f::t_3e5214489d209d 39-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a2afee560ec3609217f0320926197fe03fe24c4c",
+  "prompts": {},
+  "sessions": {
+    "s_e6468766a9f83f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "68298c9b-09f5-4a94-af06-7195e9882ffc",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Marty <saint@ghost.lt>"
+    }
+  }
+}
