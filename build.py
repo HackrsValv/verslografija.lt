@@ -36,8 +36,13 @@ def get_api_key():
 
 
 def _sitemap(prepared):
-    urls = [f"{SITE_URL}/", f"{SITE_URL}/archive/"] + [p["url"] for p in prepared]
-    body = "\n".join(f"  <url><loc>{u}</loc></url>" for u in urls)
+    newest = prepared[0]["date"] if prepared else ""
+    rows = [(f"{SITE_URL}/", newest), (f"{SITE_URL}/archive/", newest)]
+    rows += [(p["url"], p["date"]) for p in prepared]
+    body = "\n".join(
+        f"  <url><loc>{u}</loc>" + (f"<lastmod>{d}</lastmod>" if d else "") + "</url>"
+        for u, d in rows
+    )
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
