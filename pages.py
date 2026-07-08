@@ -6,6 +6,19 @@ import render
 
 SITE_URL = "https://verslografija.lt"
 
+# OpenPanel analytics (client-side; clientId is public by design).
+# Plain (non-f) string so its JS braces are not parsed by the f-string page templates.
+OPENPANEL_SNIPPET = '''<script>
+      window.op=window.op||function(){var n=[];return new Proxy(function(){arguments.length&&n.push([].slice.call(arguments))},{get:function(t,r){return"q"===r?n:function(){n.push([r].concat([].slice.call(arguments)))}} ,has:function(t,r){return"q"===r}}) }();
+      window.op('init', {
+        clientId: 'a96376bb-399c-45b6-8474-d37ec2b16c84',
+        trackScreenViews: true,
+        trackOutgoingLinks: true,
+        trackAttributes: true,
+      });
+    </script>
+    <script src="https://openpanel.dev/op1.js" defer async></script>'''
+
 
 def _kinetic(text):
     """Wrap each letter in an indexed span for the ink-stamp masthead reveal."""
@@ -43,6 +56,7 @@ def _head(title, description, canonical, image):
     <link rel="icon" type="image/svg+xml" href="/assets/vg-mark.svg">
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/style.css">
+    {OPENPANEL_SNIPPET}
 </head>"""
 
 
@@ -233,6 +247,7 @@ def landing(posts):
     <link rel="icon" type="image/svg+xml" href="/assets/vg-mark.svg">
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/style.css">
+    {OPENPANEL_SNIPPET}
 </head>
 <body class="mm">
     <div class="wrap">
