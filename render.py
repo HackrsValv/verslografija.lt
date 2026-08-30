@@ -122,6 +122,10 @@ def article(body, cover=""):
     run at build time this fails CI before a broken post can deploy.
     """
     html = to_html(body)
+    # The email body opens with "# Title", which mistune renders as <h1>.
+    # The template already shows the title, so drop the heading (tags AND text)
+    # — sanitize() alone would strip the tags but leave the bare text behind.
+    html = re.sub(r"<h1>.*?</h1>", "", html, count=1, flags=re.S)
     html = sanitize(html)
     html = _strip_cover(html, cover)
     html = _lazy_images(html)

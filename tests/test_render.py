@@ -78,3 +78,11 @@ def test_footnotes_rendered_not_raw():
     assert "<sup" in out                                # inline ref rendered
     assert "Pirmas šaltinis." in out                    # definition present
     assert 'href="#fn' in out or 'id="fn' in out        # anchor wiring
+
+
+def test_article_strips_leading_h1_text_not_just_tags():
+    """Regression: the body's leading "# Title" h1 must lose its TEXT too,
+    not only its tags — otherwise the bare title duplicates the page heading."""
+    html = render.article("# Pavadinimas\n\nTekstas prasideda.", cover="")
+    assert "<h1" not in html
+    assert "Pavadinimas" not in html.split("<p>")[0]
