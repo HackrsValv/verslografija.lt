@@ -1,10 +1,33 @@
 """Fetch published posts from the Buttondown API and normalize them."""
 
 import json
+import re
 import urllib.request
 
 API_BASE = "https://api.buttondown.email/v1/emails"
 SITE_URL = "https://verslografija.lt"
+
+
+def _excerpt(e, max_chars=200):
+    """Meta/og description text: the email's explicit description, else body text.
+
+    Most emails have no description set, so derive one from the body: drop the
+    editor comment, a leading h1 (it duplicates the title) and the leading cover
+    image, then strip the remaining markup down to plain sentences.
+    """
+    desc = (e.get("description") or "").strip()
+    if desc:
+        return desc
+    text = e.get("body") or ""
+    text = re.sub(r"<!--.*?-->", " ", text, flags=re.S)
+    text = re.sub(r"\A\s*#[^\n]*\n+", "", text)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", text)
+    text = re.sub(r"[#*_`>\[\]]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    if len(text) <= max_chars:
+        return text
+    return text[:max_chars].rsplit(" ", 1)[0] + "..."
 
 # Statuses that are publicly published in the archive. "sent" = emailed posts,
 # "imported" = posts migrated into Buttondown (the newsletter's early issues).
@@ -42,7 +65,7 @@ def prepare_posts(emails):
                 "slug": slug,
                 "title": (e.get("subject") or "").strip(),
                 "date": (e.get("publish_date") or "")[:10],
-                "excerpt": (e.get("description") or "").strip(),
+                "excerpt": _excerpt(e),
                 "image": e.get("image") or "",
                 "body": e.get("body") or "",
                 "url": f"{SITE_URL}/archive/{slug}/",
