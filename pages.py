@@ -105,15 +105,35 @@ def _prevnext(prev, nxt):
     return f'    <nav class="mm-prevnext">\n        {left}\n        {right}\n    </nav>'
 
 
+def _img_url(url, width):
+    """Buttondown's asset CDN resizes on demand; originals are 1-2 MB PNGs."""
+    if "assets.buttondown.email" not in url:
+        return url
+    sep = "&" if "?" in url else "?"
+    return f"{url}{sep}w={width}"
+
+
+def _cover_img(url, widths, sizes, alt, loading):
+    """Cover <img> with a CDN-resized srcset. Other hosts stay untouched."""
+    src = _img_url(url, widths[-1])
+    if src == url:
+        return f'<img src="{url}" alt="{alt}" loading="{loading}" decoding="async">'
+    srcset = ", ".join(f"{_img_url(url, w)} {w}w" for w in widths)
+    return (
+        f'<img src="{src}" srcset="{srcset}" sizes="{sizes}" '
+        f'alt="{alt}" loading="{loading}" decoding="async">'
+    )
+
 def post_page(post, prev, nxt):
     alt = f'{post["title"]} — iliustracija'
     cover = ""
     if post["image"]:
+        cover_img = _cover_img(post["image"], (800, 1200), "(max-width: 760px) 100vw, 1118px", escape(alt), "eager")
         cover = (
             f'<figure class="mm-cover">'
             f'<span class="mm-disc mm-disc--sm"></span>'
             f'<span class="mm-tone post-cover" style="view-transition-name:cover-{post["slug"]}">'
-            f'<img src="{post["image"]}" alt="{escape(alt)}" loading="eager" decoding="async"></span>'
+            f'{cover_img}</span>'
             f'</figure>'
         )
     body_html = render.article(post["body"], post["image"])
@@ -196,9 +216,15 @@ _COL_HUES = ("oxblood", "teal", "orange")
 
 
 def _mm_col(post, n, hue):
+    tile_img = _cover_img(
+        post["image"],
+        (400, 800),
+        "(max-width: 820px) 100vw, 330px",
+        escape(post["title"]) + " — iliustracija",
+        "lazy",
+    )
     cover = (
-        f'<div class="mm-tone" style="view-transition-name:cover-{post["slug"]}"><img src="{post["image"]}" '
-        f'alt="{escape(post["title"])} — iliustracija" loading="lazy" decoding="async"></div>'
+        f'<div class="mm-tone" style="view-transition-name:cover-{post["slug"]}">{tile_img}</div>'
         if post["image"]
         else '<div class="mm-tone mm-tone--ph">V</div>'
     )
@@ -215,11 +241,12 @@ def landing(posts):
     grid = posts[1:4]
     f_alt = f'{featured["title"]} — iliustracija'
     if featured["image"]:
+        f_img = _cover_img(featured["image"], (800, 1200), "(max-width: 900px) 100vw, 455px", escape(f_alt), "eager")
         hero_fig = (
             f'<a class="mm-hero-fig" href="/archive/{featured["slug"]}/" aria-label="{escape(featured["title"])}">'
             f'<span class="mm-disc"></span>'
             f'<span class="mm-tone" style="view-transition-name:cover-{featured["slug"]}">'
-            f'<img src="{featured["image"]}" alt="{escape(f_alt)}" loading="eager" decoding="async"></span></a>'
+            f'{f_img}</span></a>'
         )
         img_meta = (
             f'<meta property="og:image" content="{featured["image"]}">\n'
