@@ -457,3 +457,27 @@ body.mm { overflow-x: hidden; }
     .mm-issue-cta { display: none; }
     .mm-cover .mm-disc--sm { left: -16px; top: -16px; width: 64px; height: 64px; }
 }
+
+/* --- Markdown tables: real <table>, scroll-wrapped for phones --- */
+.post-body.mm-read .mm-tablewrap { margin: 0 0 1.4rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.post-body.mm-read table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 460px;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+.post-body.mm-read th, .post-body.mm-read td {
+  text-align: left;
+  vertical-align: top;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--rule);
+}
+.post-body.mm-read thead th {
+  font-weight: 700;
+  font-size: 0.95em;
+  letter-spacing: 0.02em;
+  border-bottom: 3px double var(--text);
+  background: rgba(26, 26, 26, 0.04);
+}
+.post-body.mm-read tbody tr:last-child td { border-bottom: none; }
