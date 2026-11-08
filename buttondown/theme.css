@@ -25,12 +25,14 @@ body {
   max-width: 640px;
 }
 
-/* === Sheet — masthead + content on the modern template === */
+/* === Sheet — masthead + content on the modern template ===
+   !important only where the template inlines its own value after ours (checked
+   in a real test send on 2026-11-08); elsewhere our inlined value already wins. */
 
 .newsletter-masthead {
   background-color: #f2ece0;
   border-top: 6px solid #1a1a1a;
-  margin: 0 auto;
+  margin: 0 auto !important;
 }
 
 .newsletter-masthead td {
@@ -48,13 +50,13 @@ body {
   font-family: Georgia, 'Times New Roman', serif;
   font-weight: normal;
   font-style: italic;
-  font-size: 16px;
+  font-size: 16px !important;
   line-height: 1.5;
   letter-spacing: 0;
-  color: #4a4a4a;
+  color: #4a4a4a !important;
   border-top: none;
   padding-top: 0;
-  margin-top: 12px;
+  margin-top: 12px !important;
 }
 
 /* Kicker: "Verslo Grafija · <date>" in red typewriter caps. No Lithuanian
@@ -62,28 +64,28 @@ body {
 .colophon {
   font-family: 'Courier New', Courier, monospace;
   font-weight: normal;
-  font-size: 11px;
+  font-size: 11px !important;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #8b1a1a;
-  margin-top: 14px;
+  color: #8b1a1a !important;
+  margin-top: 14px !important;
 }
 
 .email-preamble {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 11px;
-  color: #555555;
+  font-size: 11px !important;
+  color: #555555 !important;
   background-color: #f2ece0;
-  margin: 0 auto;
-  max-width: 560px;
+  margin: 0 auto !important;
+  max-width: 560px !important;
   padding: 12px 20px 4px;
 }
 
 .email-container {
-  background-color: #f2ece0;
+  background-color: #f2ece0 !important;
   border: none;
   border-bottom: 2px solid #1a1a1a;
-  margin: 0 auto;
+  margin: 0 auto !important;
 }
 
 .email-container td {
