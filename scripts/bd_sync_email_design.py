@@ -1,9 +1,11 @@
-"""Sync the Buttondown newsletter email design (custom CSS + wrapper template) from repo files.
+"""Sync the Buttondown newsletter email design (CSS + footer) from repo files.
 
-The source of truth is buttondown/theme.css and buttondown/email-template.html;
-this script pushes them to the newsletter via the Buttondown API. Dry run by
-default (validate + diff); --apply writes, but refuses while an email is
-mid-send so a queued issue never ships with a half-old design.
+The source of truth is buttondown/theme.css and buttondown/footer.md; this
+script pushes them to the newsletter via the Buttondown API, which stays on the
+"modern" template. The custom wrapper in buttondown/email-template.html is
+kept for a future plan upgrade and is not synced. Dry run by default (validate
++ diff); --apply writes, but refuses while an email is mid-send so a queued
+issue never ships with a half-old design.
 """
 
 import argparse
@@ -24,8 +26,11 @@ NEWSLETTER_USERNAME = "verslografija"
 ROOT = Path(__file__).resolve().parent.parent
 THEME_CSS = ROOT / "buttondown" / "theme.css"
 EMAIL_TEMPLATE = ROOT / "buttondown" / "email-template.html"
+FOOTER = ROOT / "buttondown" / "footer.md"
 
-FIELDS = ("css", "custom_email_template", "template")
+# Backed up before an apply; custom_email_template is no longer synced, but the
+# backup still records its remote value so a rollback can restore it.
+FIELDS = ("css", "footer", "template", "custom_email_template")
 
 # Emails in these statuses are queued to go out; --apply refuses while any
 # exist so a pending issue doesn't ship with a mismatched design.
@@ -72,8 +77,8 @@ def load_desired():
     """The repo files as they should exist on Buttondown."""
     return {
         "css": THEME_CSS.read_text(encoding="utf-8"),
-        "custom_email_template": EMAIL_TEMPLATE.read_text(encoding="utf-8"),
-        "template": "custom",
+        "footer": FOOTER.read_text(encoding="utf-8"),
+        "template": "modern",
     }
 
 
@@ -93,6 +98,25 @@ def validate_template(html):
             problems.append(f"template contains forbidden string {forbidden!r}")
     if SECRET_IN_TEMPLATE.search(html):
         problems.append('template contains what looks like an API token ("Token " + 20+ alphanumerics)')
+    return problems
+
+
+def validate_footer(text):
+    """List of problems with the newsletter footer (empty = ok).
+
+    The footer field is plain markdown/HTML. Buttondown does not document tag
+    rendering there, so a "{{" tag is refused rather than risked; so is a secret.
+    """
+    problems = []
+    if not text.strip():
+        problems.append("footer is empty")
+    if "{{" in text:
+        problems.append('footer contains a "{{" template tag; Buttondown does not render tags in the footer field')
+    for forbidden in ("buttondown-key", "api_key"):
+        if forbidden in text:
+            problems.append(f"footer contains forbidden string {forbidden!r}")
+    if SECRET_IN_TEMPLATE.search(text):
+        problems.append('footer contains what looks like an API token ("Token " + 20+ alphanumerics)')
     return problems
 
 
@@ -172,10 +196,10 @@ def main(argv=None):
         return 2
 
     desired = load_desired()
-    problems = validate_template(desired["custom_email_template"])
+    problems = validate_footer(desired["footer"])
     if problems:
         for problem in problems:
-            print(f"invalid template: {problem}")
+            print(f"invalid footer: {problem}")
         return 1
 
     try:

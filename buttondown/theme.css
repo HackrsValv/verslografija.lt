@@ -17,13 +17,78 @@ body {
 
 /* === Email container === */
 
+/* The modern template forces the body to #fafafa !important, so the newsprint
+   sheet and its rules live on the masthead and content tables below. */
 .email-body {
-  background-color: #f2ece0;
   border: none;
-  border-top: 6px solid #1a1a1a;
-  border-bottom: 2px solid #1a1a1a;
   padding: 36px 28px;
   max-width: 640px;
+}
+
+/* === Sheet — masthead + content on the modern template === */
+
+.newsletter-masthead {
+  background-color: #f2ece0;
+  border-top: 6px solid #1a1a1a;
+  margin: 0 auto;
+}
+
+.newsletter-masthead td {
+  border-bottom: none;
+  padding: 28px 28px 4px;
+  text-align: center;
+}
+
+.subject a {
+  color: #1a1a1a;
+  border-bottom: none;
+}
+
+.description {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: normal;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: #4a4a4a;
+  border-top: none;
+  padding-top: 0;
+  margin-top: 12px;
+}
+
+/* Kicker: "Verslo Grafija · <date>" in red typewriter caps. No Lithuanian
+   letters in this line, so uppercase is safe here. */
+.colophon {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: normal;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8b1a1a;
+  margin-top: 14px;
+}
+
+.email-preamble {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  color: #555555;
+  background-color: #f2ece0;
+  margin: 0 auto;
+  max-width: 560px;
+  padding: 12px 20px 4px;
+}
+
+.email-container {
+  background-color: #f2ece0;
+  border: none;
+  border-bottom: 2px solid #1a1a1a;
+  margin: 0 auto;
+}
+
+.email-container td {
+  border-bottom: none;
+  padding: 8px 28px 32px;
 }
 
 /* === Typography — heavy, condensed === */

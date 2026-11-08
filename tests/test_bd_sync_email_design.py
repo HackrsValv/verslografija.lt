@@ -45,7 +45,7 @@ def methods(fake):
 
 
 def test_real_template_validates():
-    assert bd.validate_template(bd.load_desired()["custom_email_template"]) == []
+    assert bd.validate_template(bd.EMAIL_TEMPLATE.read_text(encoding="utf-8")) == []
 
 
 def test_missing_unsubscribe_fails():
@@ -69,9 +69,34 @@ def test_token_in_template_fails():
     assert any("token" in p.lower() for p in problems)
 
 
+def test_load_desired_uses_modern_template_without_custom_template():
+    desired = bd.load_desired()
+    assert desired["template"] == "modern"
+    assert "custom_email_template" not in desired
+    assert set(desired) == {"css", "footer", "template"}
+
+
+def test_real_footer_validates():
+    assert bd.validate_footer(bd.FOOTER.read_text(encoding="utf-8")) == []
+
+
+def test_empty_footer_fails():
+    assert bd.validate_footer("  \n\t ") != []
+
+
+def test_template_tag_in_footer_fails():
+    problems = bd.validate_footer("Unsubscribe: {{ unsubscribe_url }}")
+    assert any("{{" in p for p in problems)
+
+
+def test_token_in_footer_fails():
+    problems = bd.validate_footer("Contact us · Token abcdefghijklmnopqrstuvwxyz1234")
+    assert any("token" in p.lower() for p in problems)
+
+
 def test_plan_changes_ignores_trailing_whitespace():
-    current = {"css": "a{}\n\n", "custom_email_template": "<x>1</x>", "template": "custom"}
-    desired = {"css": "a{}", "custom_email_template": "<x>1</x>", "template": "custom"}
+    current = {"css": "a{}\n\n", "footer": "x\n", "template": "modern"}
+    desired = {"css": "a{}", "footer": "x", "template": "modern"}
     assert bd.plan_changes(current, desired) == {}
 
 
@@ -91,6 +116,14 @@ def test_dry_run_never_patches(monkeypatch):
     assert "PATCH" not in methods(fake)
 
 
+def test_dry_run_with_up_to_date_state_prints_no_changes(monkeypatch, capsys):
+    fake = FakeAPI(current_like_desired())
+    monkeypatch.setattr(bd, "request", fake)
+    monkeypatch.setenv("BUTTONDOWN_API_KEY", "test-key")
+    assert bd.main([]) == 0
+    assert "no changes" in capsys.readouterr().out
+
+
 def test_apply_refuses_with_pending_send(tmp_path, monkeypatch, capsys):
     fake = FakeAPI(current_like_desired(css="old css"), pending=[{"subject": "Nr. 42"}])
     monkeypatch.setattr(bd, "request", fake)
@@ -100,8 +133,20 @@ def test_apply_refuses_with_pending_send(tmp_path, monkeypatch, capsys):
     assert "Nr. 42" in capsys.readouterr().out
 
 
+def test_apply_patches_only_footer_when_only_footer_differs(tmp_path, monkeypatch):
+    fake = FakeAPI(current_like_desired(footer="old footer"))
+    monkeypatch.setattr(bd, "request", fake)
+    monkeypatch.setenv("BUTTONDOWN_API_KEY", "test-key")
+    assert bd.main(["--apply", "--backup-dir", str(tmp_path)]) == 0
+    patches = [call for call in fake.calls if call[0] == "PATCH"]
+    assert len(patches) == 1
+    _, _, payload = patches[0]
+    assert set(payload) == {"footer"}
+    assert payload["footer"] == bd.load_desired()["footer"]
+
+
 def test_apply_patches_only_changed_fields_and_writes_backup(tmp_path, monkeypatch):
-    fake = FakeAPI(current_like_desired(css="old css"))
+    fake = FakeAPI(current_like_desired(css="old css", custom_email_template="<old wrapper>"))
     monkeypatch.setattr(bd, "request", fake)
     monkeypatch.setenv("BUTTONDOWN_API_KEY", "test-key")
     assert bd.main(["--apply", "--backup-dir", str(tmp_path)]) == 0
@@ -114,8 +159,9 @@ def test_apply_patches_only_changed_fields_and_writes_backup(tmp_path, monkeypat
     assert len(backups) == 1
     saved = json.loads(backups[0].read_text(encoding="utf-8"))
     assert saved["css"] == "old css"
-    assert saved["template"] == "custom"
-    assert saved["custom_email_template"] == fake.newsletter["custom_email_template"]
+    assert saved["template"] == "modern"
+    assert saved["footer"] == fake.newsletter["footer"]
+    assert saved["custom_email_template"] == "<old wrapper>"
 
 
 def test_apply_readback_mismatch_exits_1(tmp_path, monkeypatch, capsys):
