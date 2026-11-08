@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ email.subject }}</title>
+  <!--
+    Verslografija.lt — custom email wrapper (Pulp Press)
+    Įklijuoti į Buttondown dashboard → Settings → hidden setting
+    „custom email body template". Po to template = custom.
+
+    TAGAI (dokumentuoti BD): {{ email.subject }}, {{ email.secondary_id }},
+    {{ email.absolute_url }}, {{ email_url }}, {{ newsletter.name }},
+    {{ newsletter.username }}, {{ subscribe_url }}, {{ unsubscribe_url }},
+    {{ powered_by_utm }}.
+    {{ content }} — TURINIO VIETA (neoficialus; jei testas parodys tuščią,
+    bandyti {{ body }} / {{ email.body }}).
+    {{ email.publish_date|date:"Y-m-d" }} — data (neoficialus; jei tuščia,
+    ištrinti — jokios žalos, Django tyliai palieka tuščią).
+    {{ unsubscribe_url }} PRIVALOMAS — BD reikalavimas.
+  -->
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light">
+  <style>
+    :root { color-scheme: light only; }
+    /* Progressive enhancement: dark mode + mobilus. Gmail iškarpsto <style>,
+       bet Apple Mail / Samsung / Gmail app palaiko — niekam nekenkia.
+       Dark mode: tamsėja tik aplinka, laikraščio lapas lieka šviesus. Buttondown
+       turinio nuorodoms įrašo inline „color: #8b1a1a !important“, kurio <style>
+       neperrašo, o ant tamsaus lapo jos kontrastas 1,7:1. */
+    @media (prefers-color-scheme: dark) {
+      .vg-paper { background-color: #1a1a1e !important; }
+    }
+    @media screen and (max-width: 600px) {
+      .vg-pad { padding: 24px 16px 32px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:24px 12px;background-color:#ede7d9;" class="vg-paper">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="vg-paper" style="background-color:#ede7d9;"><tr><td align="center">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="vg-sheet"
+           style="max-width:640px;background-color:#f2ece0;border-top:6px solid #1a1a1a;border-bottom:2px solid #1a1a1a;">
+      <tr><td class="vg-pad" style="padding:36px 28px 40px;">
+
+        <!-- ===== MASTHEAD ===== -->
+        <img src="https://assets.buttondown.email/images/abc52c6b-6db6-4ece-815e-44f98e0df1ab.png"
+             alt="Verslo Grafija" width="44" height="44"
+             style="display:block;width:44px;height:44px;margin:0 auto 16px auto;">
+        <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#8b1a1a;margin-bottom:18px;text-align:center;">
+          Verslo Grafija&nbsp;·&nbsp;Nr.&nbsp;{{ email.secondary_id }}
+        </div>
+        <h1 style="font-family:'Arial Black',Arial,Helvetica,sans-serif;font-weight:900;color:#1a1a1a;font-size:28px;line-height:1.1;letter-spacing:0.02em;margin:0 0 6px 0;padding-bottom:10px;border-bottom:4px solid #1a1a1a;text-align:center;">
+          <a href="{{ email.absolute_url }}" style="color:#1a1a1a;text-decoration:none;">{{ email.subject }}</a>
+        </h1>
+        <div style="font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:18px;color:#555555;margin-top:10px;text-align:center;">
+          {{ email.publish_date|date:"Y-m-d" }}
+        </div>
+
+        <!-- ===== TURINYS ===== -->
+        <div style="font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.7;color:#1a1a1a;margin-top:24px;">
+          {{ content }}
+        </div>
+
+        <!-- ===== KOLOFONAS ===== -->
+        <div style="margin-top:40px;border-top:6px double #1a1a1a;padding-top:14px;font-family:'Courier New',Courier,monospace;font-size:11px;color:#555555;text-transform:uppercase;letter-spacing:0.06em;">
+          <div style="margin-bottom:12px;">Tai buvo Nr.&nbsp;{{ email.secondary_id }}&nbsp;—&nbsp;{{ newsletter.name }}</div>
+          <div style="font-family:Georgia,'Times New Roman',serif;font-size:13px;text-transform:none;letter-spacing:0;line-height:1.9;">
+            <a href="{{ subscribe_url }}" style="color:#8b1a1a;text-decoration:none;border-bottom:2px solid #8b1a1a;">Prenumeruoti</a>
+            <span style="color:#bbbbbb;">&nbsp;·&nbsp;</span>
+            <a href="{{ unsubscribe_url }}" style="color:#8b1a1a;text-decoration:none;border-bottom:2px solid #8b1a1a;">Atsisakyti</a>
+            <span style="color:#bbbbbb;">&nbsp;·&nbsp;</span>
+            <a href="{{ email_url }}" style="color:#8b1a1a;text-decoration:none;border-bottom:2px solid #8b1a1a;">Skaityti naršyklėje</a>
+          </div>
+          <div style="margin-top:12px;text-transform:none;letter-spacing:0;font-size:10px;">
+            Laišką siunčia
+            <a href="https://buttondown.com/refer/{{ newsletter.username }}{{ powered_by_utm }}" style="color:#555555;text-decoration:none;border-bottom:1px solid #999999;">Buttondown</a>
+            — paprasčiausias būdas kurti naujienlaiškį
+          </div>
+        </div>
+
+      </td></tr>
+    </table>
+  </td></tr></table>
+</body>
+</html>
