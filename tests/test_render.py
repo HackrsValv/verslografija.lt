@@ -190,3 +190,27 @@ def test_inline_alt_override_ignores_unknown_images(monkeypatch):
     assert 'src="https://media.beehiiv.com/kita.png"' in out
     assert 'alt="jau yra"' in out          # never overwrites a real alt
     assert 'alt="x"' not in out
+
+
+# Buttondown rich-editor shape (live "Patiks Bosui", 2026-11-08): refs point
+# at #fn:N, but the footnote <li>s carry only the shared data-id, no id.
+RICH_FOOTNOTES = (
+    '<p>Tekstas<sup id="fnref:1"><a class="footnote-ref" data-id="aaa" href="#fn:1"'
+    ' data-reference-number="1">1</a></sup> ir dar<sup id="fnref:2"><a class="footnote-ref"'
+    ' href="#fn:2" data-id="bbb" data-reference-number="2">2</a></sup>.</p>'
+    '<ol class="footnotes"><li data-id="aaa"><p>Pirmas.</p></li>'
+    '<li data-id="bbb"><p>Antras.</p></li></ol>'
+)
+
+
+def test_rich_editor_footnotes_get_target_ids():
+    html = render.article(RICH_FOOTNOTES)
+    assert '<li id="fn:1"><p>Pirmas.' in html
+    assert '<li id="fn:2"><p>Antras.' in html
+    assert 'id="fnref:1"' in html and 'href="#fn:1"' in html
+    assert render.missing_anchors(html) == []
+
+
+def test_missing_anchors_lists_dangling_fragment_links():
+    html = '<a href="#fn:1">1</a><a href="#ok">x</a><p id="ok"></p><a href="/a/#b">y</a>'
+    assert render.missing_anchors(html) == ["fn:1"]
