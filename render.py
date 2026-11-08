@@ -17,6 +17,11 @@ _MD_IMAGE = re.compile(r"!\[[^\]]*\]\([^)]*\)")
 _MD_HEADING = re.compile(r"^#{1,6}\s", re.MULTILINE)
 _MD_FOOTNOTE = re.compile(r"\[\^[^\]]+\]")
 _MD_TABLE = re.compile(r"^\|.+\|\s*$", re.MULTILINE)
+_FN_REF = re.compile(r'<a\b[^>]*\bclass="footnote-ref"[^>]*>', re.IGNORECASE)
+_FN_ITEM = re.compile(r'<li\b[^>]*\bdata-id="([^"]+)"[^>]*>', re.IGNORECASE)
+_DATA_ID = re.compile(r'\bdata-id="([^"]+)"')
+_HREF_FRAG = re.compile(r'\bhref="#([^"]+)"')
+_ID_ATTR = re.compile(r'\sid="([^"]+)"')
 
 ALLOWED_TAGS = {
     "a", "p", "h2", "h3", "h4", "blockquote", "em", "strong",
@@ -100,6 +105,35 @@ class _Sanitizer(HTMLParser):
 
     def handle_data(self, data):
         self.out.append(data)
+
+
+def _link_footnotes(html):
+    """Give rich-editor footnote items the id their refs point at.
+
+    Buttondown's rich editor links each ref to href="#fn:N" but marks the
+    matching <li> only with a shared data-id, so the jump goes nowhere. Copy
+    the ref's fragment onto the <li> with the same data-id; run before
+    sanitize(), which drops data-id.
+    """
+    targets = {}
+    for tag in _FN_REF.findall(html):
+        did, frag = _DATA_ID.search(tag), _HREF_FRAG.search(tag)
+        if did and frag:
+            targets[did.group(1)] = frag.group(1)
+
+    def fix(m):
+        tag, frag = m.group(0), targets.get(m.group(1))
+        if not frag or _ID_ATTR.search(tag):
+            return tag
+        return f'{tag[:-1]} id="{frag}">'
+
+    return _FN_ITEM.sub(fix, html)
+
+
+def missing_anchors(html):
+    """In-page links (href="#x") with no element id="x" on the page."""
+    ids = set(_ID_ATTR.findall(html))
+    return list(dict.fromkeys(f for f in _HREF_FRAG.findall(html) if f not in ids))
 
 
 def sanitize(html):
@@ -213,7 +247,7 @@ def article(body, cover=""):
     # The template already shows the title, so drop the heading (tags AND text)
     # — sanitize() alone would strip the tags but leave the bare text behind.
     html = re.sub(r"<h1>.*?</h1>", "", html, count=1, flags=re.S)
-    html = sanitize(html)
+    html = sanitize(_link_footnotes(html))
     html = _strip_cover(html, cover)
     html = _lazy_images(html)
     html = _cdn_inline_images(html)

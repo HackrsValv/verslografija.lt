@@ -17,6 +17,7 @@ from pathlib import Path
 
 import pages
 import posts
+import render
 
 SITE_DIR = Path(__file__).parent
 SITE_URL = posts.SITE_URL
@@ -73,7 +74,12 @@ def write_site(prepared, out_dir):
         nxt = prepared[i - 1] if i > 0 else None
         page_dir = archive_dir / post["slug"]
         page_dir.mkdir(parents=True, exist_ok=True)
-        (page_dir / "index.html").write_text(pages.post_page(post, prev, nxt))
+        page = pages.post_page(post, prev, nxt)
+        # Guard: every in-page link (footnotes, nav) must land on this page.
+        dangling = render.missing_anchors(page)
+        if dangling:
+            raise ValueError(f"dangling anchors in post {post['slug']}: {dangling}")
+        (page_dir / "index.html").write_text(page)
         written.append(page_dir / "index.html")
 
     (out_dir / "sitemap.xml").write_text(_sitemap(prepared))

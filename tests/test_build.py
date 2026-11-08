@@ -27,3 +27,12 @@ def test_write_site_fails_loud_on_empty_body(tmp_path, sample_emails):
     with pytest.raises(ValueError) as exc:
         build.write_site(bad, tmp_path)
     assert "pasaku-taskai" in str(exc.value)
+
+
+def test_write_site_fails_loud_on_dangling_anchor(tmp_path, sample_emails):
+    import pytest
+    bad = posts.prepare_posts(sample_emails)
+    bad[0]["body"] = '<p>Tekstas<a href="#niekur">1</a></p>'
+    with pytest.raises(ValueError) as exc:
+        build.write_site(bad, tmp_path)
+    assert "pasaku-taskai" in str(exc.value) and "niekur" in str(exc.value)
