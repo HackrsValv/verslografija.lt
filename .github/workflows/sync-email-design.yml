@@ -1,0 +1,71 @@
+name: Sync Buttondown Email Design
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'buttondown/**'
+      - 'scripts/bd_sync_email_design.py'
+  pull_request:
+    paths:
+      - 'buttondown/**'
+      - 'scripts/bd_sync_email_design.py'
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: 'Apply changes to Buttondown (otherwise dry run)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: buttondown-email-design
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m pytest -q tests/test_bd_sync_email_design.py
+
+      - name: Dry run (PR / dispatch without apply)
+        if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && !inputs.apply)
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_WRITE_API_KEY }}
+        run: |
+          if [ -z "$BUTTONDOWN_API_KEY" ]; then
+            echo "no key, skipping"
+            exit 0
+          fi
+          python scripts/bd_sync_email_design.py
+
+      - name: Apply (push to main / dispatch with apply)
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.apply)
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_WRITE_API_KEY }}
+        run: |
+          if [ -z "$BUTTONDOWN_API_KEY" ]; then
+            echo "no key, skipping"
+            exit 0
+          fi
+          python scripts/bd_sync_email_design.py --apply
+
+      - name: Upload backup
+        if: always() && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.apply))
+        uses: actions/upload-artifact@v4
+        with:
+          name: bd-backup
+          path: .bd-backup/
+          if-no-files-found: ignore
