@@ -26,7 +26,7 @@ class FakeAPI:
             return {"results": [self.newsletter]}
         if path.startswith("/emails"):
             return {"results": self.pending}
-        if method == "PATCH" and path == f"/newsletters/{bd.NEWSLETTER_ID}":
+        if method == "PATCH" and path == f"/newsletters/{self.newsletter['id']}":
             if self.apply_patch:
                 self.newsletter.update(payload)
             return self.newsletter
@@ -125,6 +125,23 @@ def test_apply_readback_mismatch_exits_1(tmp_path, monkeypatch, capsys):
     assert bd.main(["--apply", "--backup-dir", str(tmp_path)]) == 1
     assert "PATCH" in methods(fake)
     assert "css" in capsys.readouterr().out
+
+
+def test_apply_matches_by_username_when_id_is_prefixed(tmp_path, monkeypatch):
+    # Keys pinned to newer API versions see prefixed ids instead of the UUID.
+    fake = FakeAPI(current_like_desired(id="nl_01jexample", username="verslografija", css="old css"))
+    monkeypatch.setattr(bd, "request", fake)
+    monkeypatch.setenv("BUTTONDOWN_API_KEY", "test-key")
+    assert bd.main(["--apply", "--backup-dir", str(tmp_path)]) == 0
+    assert ("PATCH", "/newsletters/nl_01jexample") in [(m, p) for m, p, _ in fake.calls]
+
+
+def test_missing_newsletter_names_what_was_seen(monkeypatch, capsys):
+    fake = FakeAPI(current_like_desired(id="nl_other", username="infrawei"))
+    monkeypatch.setattr(bd, "request", fake)
+    monkeypatch.setenv("BUTTONDOWN_API_KEY", "test-key")
+    assert bd.main([]) == 1
+    assert "saw: infrawei" in capsys.readouterr().out
 
 
 def test_missing_api_key_exits_2(monkeypatch):

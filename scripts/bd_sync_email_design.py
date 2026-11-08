@@ -97,12 +97,18 @@ def validate_template(html):
 
 
 def fetch_current(token):
-    """The newsletter object with our id (SyncError if the API doesn't list it)."""
+    """Our newsletter object (SyncError if the API doesn't list it).
+
+    Matched by username as well as id: newer API versions return prefixed ids,
+    so the UUID alone stops matching when a key is pinned to a later version.
+    """
     data = request("GET", "/newsletters", token)
-    for newsletter in data.get("results", []):
-        if newsletter.get("id") == NEWSLETTER_ID:
+    results = data.get("results", [])
+    for newsletter in results:
+        if newsletter.get("id") == NEWSLETTER_ID or newsletter.get("username") == NEWSLETTER_USERNAME:
             return newsletter
-    raise SyncError(f"GET /newsletters did not include newsletter {NEWSLETTER_ID}")
+    seen = ", ".join(str(n.get("username")) for n in results) or "none"
+    raise SyncError(f"GET /newsletters did not include {NEWSLETTER_USERNAME} (saw: {seen})")
 
 
 def pending_sends(token):
@@ -195,7 +201,7 @@ def main(argv=None):
         if changes:
             request(
                 "PATCH",
-                f"/newsletters/{NEWSLETTER_ID}",
+                f"/newsletters/{current['id']}",
                 token,
                 payload={field: new for field, (old, new) in changes.items()},
             )
