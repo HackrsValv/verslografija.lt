@@ -69,6 +69,7 @@ def _masthead():
             <nav class="mm-nav mm-nav--row">
                 <a href="/">Pradžia</a>
                 <a href="/archive/">Archyvas</a>
+                <a class="mm-nav-sub" href="#prenumeruoti">Prenumeruoti</a>
             </nav>
         </header>
     </div>"""

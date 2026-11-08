@@ -52,3 +52,10 @@ def test_landing_links_are_local():
     assert 'href="/archive/p0/"' in html      # featured
     assert 'href="/archive/"' in html          # nav + footer archive
     assert html.count("<h1") == 1
+
+
+def test_reading_pages_nav_links_to_subscribe_block():
+    # Shared post links land deep in a long page; the form sits at the bottom.
+    for html in (pages.post_page(_post(), prev=None, nxt=None), pages.archive_index([_post()])):
+        assert 'class="mm-nav-sub" href="#prenumeruoti"' in html
+        assert 'id="prenumeruoti"' in html
